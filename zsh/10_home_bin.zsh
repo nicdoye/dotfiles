@@ -1,5 +1,6 @@
 ########################################################################
 # Non-Homebrew
-opt_prefix=${HOME}/unix/opt
+unix_home=${HOME}/unix
+opt_prefix=${unix_home}/opt
 ########################################################################
-export PATH=${opt_prefix}/bin:${opt_prefix}/sbin:${PATH}
+export PATH=${unix_home}/bin:${unix_home}/sbin:${PATH}
