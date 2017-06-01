@@ -1,0 +1,38 @@
+if has("gui")
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 12
+    elseif has("gui_win32")
+        set guifont=Consolas:h10:cANSI
+    endif
+elseif has("nvim")
+    set termguicolors
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+    execute pathogen#infect('bundle/{}', '~/.config/nvim/bundle/{}')
+endif
+
+try
+    colorscheme seti
+catch
+    colorscheme desert
+endtry
+
+syntax on
+set nolist
+set expandtab ts=4 sw=4 ai
+
+set number
+set norelativenumber
+
+" Annoying highlighting of 'tabs'
+let g:indent_guides_auto_colors = 0
+" https://github.com/neovim/neovim/wiki/FAQ#how-can-i-change-the-cursor-shape-in-the-terminal
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+" Some files need syntax setting
+" NANT (like I need that)
+au BufRead,BufNewFile *.build set filetype=xml
+" .aliases obvs
+au BufRead,BufNewFile *.aliases set filetype=sh
+
+" Pretty pointless
+:let g:netrw_dirhistmax = 0
