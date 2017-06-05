@@ -18,3 +18,16 @@ setopt SHARE_HISTORY
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
+
+# Bizarre zshism
+# alias history="history 1"
+# Equivalent/better as a function.
+function history () { 
+    if [ -z "$*" ]
+    then
+        # Bash-style all history
+        fc -l 1
+    else
+        fc -l $*
+    fi
+}
