@@ -27,12 +27,12 @@ pstree      () {
 
 print_sep   ()
 {
-    printf "---- $* ------------------------------------------------------\n"
+    printf "---- $*\t------------------------------------------------------\n"
 }
 
 bum         () 
 { 
-
+    print_sep "starting upgrades"
     brew_u      () 
     { 
         print_sep "brew upgrade"
@@ -75,6 +75,8 @@ bum         ()
     antibody_u
     gcloud_u
     firebase_u
+
+    print_sep "all finished"
 }
 
 bi          () brew info 	$* 
