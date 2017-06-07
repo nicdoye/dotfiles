@@ -48,7 +48,7 @@ bum         ()
     firebase_u  ()
     {
         print_sep "firebase update"
-        npm upgrade -g firebase-tools
+        npm install -g firebase-tools
     }
 
     mas_u       ()
@@ -66,7 +66,7 @@ bum         ()
     npm_u       ()
     {
         print_sep "npm upgrade"
-        npm i -g npm
+        npm install -g npm
     }
 
     brew_u
