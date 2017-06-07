@@ -27,22 +27,18 @@ pstree      () {
 
 print_sep   ()
 {
-    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $*"
-}
-# Can't remember the reasoning for using STDERR ( >&2 )
-bu          () 
-{ 
-    # No longer necessary. upgrade updates first.
-    #print ">>> brew update"
-    #brew update
-    #local retval=$?
-    #if [[ 0 != ${retval} ]] return ${retval}
-    print_sep "brew upgrade"
-    brew upgrade 
+    printf "---- $* ------------------------------------------------------\n"
 }
 
 bum         () 
 { 
+
+    brew_u      () 
+    { 
+        print_sep "brew upgrade"
+        brew upgrade 
+    }
+
     gcloud_u    ()
     {
         print_sep "gcloud update"
@@ -67,11 +63,18 @@ bum         ()
         antibody update
     }
 
+    npm_u       ()
+    {
+        print_sep "npm upgrade"
+        npm i -g npm
+    }
+
+    brew_u
+    mas_u
+    npm_u
     antibody_u
     gcloud_u
     firebase_u
-    bu
-    mas_u
 }
 
 bi          () brew info 	$* 
