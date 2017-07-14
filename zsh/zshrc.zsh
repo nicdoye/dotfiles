@@ -6,7 +6,7 @@
     # rbenv et al.
     eval $(/usr/libexec/path_helper -s)
 
-    export DOTFILES="${HOME}/.dotfiles"
+    export dotfiles_dir="${HOME}/.dotfiles"
 
     # Utility function - unused
     includer2 () {
@@ -14,12 +14,10 @@
         [ -f "${filename}" ] && source "${filename}" || echo "Error with or in ${filename}"
     }
 
-    for file in "${HOME}/.00_secrets.zsh" ${DOTFILES}/zsh/[0-9][0-9]_*.zsh
+    local secret_zshrc="${HOME}/.secrets/secrets.zsh"
+    for file in "${secret_zshrc}" ${dotfiles_dir}/zsh/[0-9][0-9]_*.zsh
     do
         includer2 ${file}
     done
 }
 
-#source <(antibody init)
-#antibody bundle < "${DOTFILES}/antibody/bundles.txt" > ~/.zsh_plugins.sh
-#antibody update
