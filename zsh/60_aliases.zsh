@@ -69,6 +69,13 @@ bum         ()
         npm install -g npm
     }
 
+    brew_cast_u ()
+    {
+        print_sep "brew cask list"
+        brew cask outdated
+        #brew cask reinstall $(brew cask outdated | awk '{print $1}')
+    }
+
     brew_u
     mas_u
     npm_u
