@@ -4,4 +4,7 @@
 #local brew_prefix=$(brew --prefix)
 brew_prefix=$(brew --prefix)
 ########################################################################
-export PATH=/usr/local/sbin:${PATH}
+export PATH=${brew_prefix}/sbin:${PATH}
+
+# DO NOT UNSET. IT IS USED IN OTHER FILES.
+#unset brew_prefix

@@ -192,24 +192,33 @@ alpine      () _di_all ${(%):-%N} $*
 #aws         () di --volume ~/.aws:/root/.aws cgswong/aws:latest aws $*
 #curl        () fedora ${(%):-%N} $*
 #ggrep       () fedora grep $*
-#sha1sum     () fedora ${(%):-%N} $*
-#sha224sum   () fedora ${(%):-%N} $*
-#sha256sum   () fedora ${(%):-%N} $* 
-#sha384sum   () fedora ${(%):-%N} $* 
-#sha512sum   () fedora ${(%):-%N} $* 
+
+# fedora/docker is faster than native which is faster than alpine/docker
+sha1sum     () fedora ${(%):-%N} $*
+sha224sum   () fedora ${(%):-%N} $*
+sha256sum   () fedora ${(%):-%N} $* 
+sha384sum   () fedora ${(%):-%N} $* 
+sha512sum   () fedora ${(%):-%N} $* 
+
+# Brew/coreutils is faster than fedora/docker which is faster than alpine/docker
 #md5sum      () fedora ${(%):-%N} $*
+
+# Native tar is faster than Brew/coreutils tar which is faster than all docker
 #gtar        () ubuntu tar $*
 
 # Supplied by brew coreutils
 # so each can be defined via:
 #shaNsum      () ${(%):-g%N} $*
+
+# fedora/docker is faster than native which is faster than alpine/docker
 # But these are the OS versions (shasum is actually perl)
-sha1sum     () shasum -a ${${${(%):-%N}#sha}%sum} $*
-sha224sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-sha256sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-sha384sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-sha512sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-sha512sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
+
+#sha1sum     () shasum -a ${${${(%):-%N}#sha}%sum} $*
+#sha224sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
+#sha256sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
+#sha384sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
+#sha512sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
+
 # Supplied by brew coreutils
 md5sum      () ${(%):-g%N} $*
 vdir        () ${(%):-g%N} $*
@@ -221,3 +230,6 @@ vdir        () ${(%):-g%N} $*
 # Supplied by nmap dmg
 #nmap        () di uzyexe/nmap $*
 #irssi       () di -e TERM -u $(id -u):$(id -g) -v /Users/ndoye/.irssi:/home/user/.irssi:ro ${(%):-%N}
+
+# Not used too much yet.
+che         () di -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/che:/data eclipse/che start
