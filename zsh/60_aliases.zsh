@@ -32,6 +32,7 @@ print_sep   ()
 
 bum         () 
 { 
+    local all_p=$1
     print_sep "starting upgrades"
     brew_u      () 
     { 
@@ -69,19 +70,40 @@ bum         ()
         npm install -g npm
     }
 
-    brew_cast_u ()
+    npm_u2      ()
+    {
+        print_sep "npm upgrade"
+        npm up -g npm firebase-tools
+    }
+
+    brew_cask_u ()
     {
         print_sep "brew cask list"
         brew cask outdated
-        #brew cask reinstall $(brew cask outdated | awk '{print $1}')
+        local upgrades=$(brew cask outdated | awk '{ print $1 }' |  xargs)
+        if [ -n "$upgrades" ]
+        then
+            brew cask reinstall $upgrades
+        fi
+    }
+
+    optional_u ()
+    {
+        brew_cask_u
     }
 
     brew_u
     mas_u
-    npm_u
+    npm_u2
     antibody_u
     gcloud_u
-    firebase_u
+    if [[ '-a' == "$all_p" ]]
+    then
+        print_sep "upgrading optional items"
+        optional_u
+    fi
+        
+
 
     print_sep "all finished"
 }
