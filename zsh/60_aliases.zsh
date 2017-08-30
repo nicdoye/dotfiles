@@ -1,4 +1,9 @@
 # vim: set filetype=sh :
+
+########################################################################
+# Remember one-liners containing || etc., need to be enclosed by {}
+########################################################################
+
 export PAGER=vimpager
 
 __nic_pager () ${PAGER} $*
@@ -14,16 +19,13 @@ lzmore      () __nic_pager $*
 xzmore      () __nic_pager $*
 top         () htop
 vim         () nvim $*
-pstree      () { 
-    local pstree=$(whence -p pstree | head -1)
-    if [[ -n ${pstree} ]]
-    then
-        ${pstree} -g2 -w $*
-    else
-        return 1
-    fi
-}
 
+
+# This is only for commands, not functions or aliases
+find_cmd () { whence -p $1 || echo false ; }
+
+pstree      () $(find_cmd pstree) -g2 -w $*
+l           () $(find_cmd m) lock
 
 print_sep   ()
 {
@@ -134,10 +136,11 @@ c7          () ssh ndcentos7vm $*
 nd          () c7 $*
 13          () ssh pbld13 $*
 
-githost     () ssh git-host-002.orionwt.co.uk $*
+githost     () ssh githost-legacy $*
 bastion     () ssh bastion.it.orionwt.co.uk $*
 bellatrix   () ssh bellatrix.orionwt.co.uk $*
 test4       () ssh test4.orionwt.co.uk $*
+remote-management () ssh remote-management.it.orion $*
 
 # https://gist.github.com/nicdoye/62a2000972ee347123f079b70e994bc2
 
@@ -255,3 +258,10 @@ vdir        () ${(%):-g%N} $*
 
 # Not used too much yet.
 che         () di -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/che:/data eclipse/che start
+# Specific terraform version for alf
+terraform-0-9-11    () di hashicorp/terraform:0.9.11 $*
+terraform-latest    () di hashicorp/terraform:latest $*
+packer-latest       () {
+    local packer_root='/opt/'
+    di -v $PWD:${packer_root} hashicorp/packer:light $(echo $* | sed -E "s_([[:alnum:]_-]*.json)_${packer_root}\1_")
+}
