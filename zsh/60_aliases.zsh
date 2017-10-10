@@ -32,68 +32,69 @@ print_sep   ()
     printf -- "---- $*\t------------------------------------------------------\n"
 }
 
+# There's no reason for these not to be in global scope
+brew_u      () 
+{ 
+    print_sep "brew upgrade"
+    brew upgrade 
+}
+
+gcloud_u    ()
+{
+    print_sep "gcloud update"
+    gcloud components update --quiet
+}
+
+firebase_u  ()
+{
+    print_sep "firebase update"
+    npm install -g firebase-tools
+}
+
+mas_u       ()
+{
+    print_sep "mas upgrade"
+    mas upgrade
+}
+
+antibody_u  ()
+{
+    print_sep "antibody update"
+    antibody update
+}
+
+npm_u       ()
+{
+    print_sep "npm upgrade"
+    npm install -g npm
+}
+
+npm_u2      ()
+{
+    print_sep "npm upgrade"
+    npm up -g npm firebase-tools
+}
+
+brew_cask_u ()
+{
+    print_sep "brew cask list"
+    brew cask outdated
+    for cask in $(brew cask outdated | awk '{ print $1 }' |  xargs)
+    do
+        brew cask reinstall "$cask"
+    done
+}
+
+optional_u ()
+{
+    brew_cask_u
+}
+
 bum         () 
 { 
     local all_p=$1
+
     print_sep "starting upgrades"
-    brew_u      () 
-    { 
-        print_sep "brew upgrade"
-        brew upgrade 
-    }
-
-    gcloud_u    ()
-    {
-        print_sep "gcloud update"
-        gcloud components update --quiet
-    }
-
-    firebase_u  ()
-    {
-        print_sep "firebase update"
-        npm install -g firebase-tools
-    }
-
-    mas_u       ()
-    {
-        print_sep "mas upgrade"
-        mas upgrade
-    }
-
-    antibody_u  ()
-    {
-        print_sep "antibody update"
-        antibody update
-    }
-
-    npm_u       ()
-    {
-        print_sep "npm upgrade"
-        npm install -g npm
-    }
-
-    npm_u2      ()
-    {
-        print_sep "npm upgrade"
-        npm up -g npm firebase-tools
-    }
-
-    brew_cask_u ()
-    {
-        print_sep "brew cask list"
-        brew cask outdated
-        local upgrades=$(brew cask outdated | awk '{ print $1 }' |  xargs)
-        if [ -n "$upgrades" ]
-        then
-            brew cask reinstall $upgrades
-        fi
-    }
-
-    optional_u ()
-    {
-        brew_cask_u
-    }
-
     brew_u
     mas_u
     npm_u2
@@ -105,8 +106,6 @@ bum         ()
         optional_u
     fi
         
-
-
     print_sep "all finished"
 }
 
