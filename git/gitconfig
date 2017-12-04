@@ -24,3 +24,5 @@
 [user]
 	name = Nic Doye
 	email = nic.doye@alfresco.com
+[push]
+	default = simple

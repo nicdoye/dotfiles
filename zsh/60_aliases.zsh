@@ -45,12 +45,6 @@ gcloud_u    ()
     gcloud components update --quiet
 }
 
-firebase_u  ()
-{
-    print_sep "firebase update"
-    npm install -g firebase-tools
-}
-
 mas_u       ()
 {
     print_sep "mas upgrade"
@@ -63,16 +57,10 @@ antibody_u  ()
     antibody update
 }
 
-npm_u       ()
-{
-    print_sep "npm upgrade"
-    npm install -g npm
-}
-
 npm_u2      ()
 {
     print_sep "npm upgrade"
-    npm up -g npm firebase-tools
+    npm up -g npm firebase-tools aws-sam-local
 }
 
 brew_cask_u ()
