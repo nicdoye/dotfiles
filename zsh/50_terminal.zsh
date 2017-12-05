@@ -19,6 +19,8 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt prompt_subst
+setopt autocd
+setopt correctall
 
 # Bizarre zshism
 # alias history="history 1"
