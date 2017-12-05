@@ -21,6 +21,7 @@ setopt HIST_VERIFY
 setopt prompt_subst
 setopt autocd
 setopt correctall
+setopt interactivecomments
 
 # Bizarre zshism
 # alias history="history 1"
