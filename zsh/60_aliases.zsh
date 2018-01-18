@@ -67,7 +67,7 @@ brew_cask_u ()
 {
     print_sep "brew cask list"
     brew cask outdated
-    for cask in $(brew cask outdated | awk '{ print $1 }' |  xargs)
+    for cask in $(brew cask outdated | awk '{ print $1 }' |  grep -v chef | xargs)
     do
         brew cask reinstall "$cask"
     done
