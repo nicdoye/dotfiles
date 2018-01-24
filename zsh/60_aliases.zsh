@@ -17,7 +17,7 @@ zmore       () __nic_pager $*
 bzmore      () __nic_pager $*
 lzmore      () __nic_pager $*
 xzmore      () __nic_pager $*
-top         () htop
+top         () glances
 vim         () nvim $*
 
 
@@ -112,22 +112,6 @@ flac2alac	() {
 		ffmpeg -i "${file}" -vn -c:a alac "${file%.flac}.m4a" # cover.jpg
 	done
 }
-
-#ssh         () assh wrapper ssh $*
-
-gitlab      () cd ${HOME}/vcs/gitlab.alfresco.com
-
-hopoff      () ssh hopoff.alfresco.me $*
-c6          () ssh ndcentos6vm $*
-c7          () ssh ndcentos7vm $*
-nd          () c7 $*
-13          () ssh pbld13 $*
-
-githost     () ssh githost-legacy $*
-bastion     () ssh bastion.it.orionwt.co.uk $*
-bellatrix   () ssh bellatrix.orionwt.co.uk $*
-test4       () ssh test4.orionwt.co.uk $*
-remote-management () ssh remote-management.it.orion $*
 
 # https://gist.github.com/nicdoye/62a2000972ee347123f079b70e994bc2
 
