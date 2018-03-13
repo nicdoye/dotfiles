@@ -41,6 +41,10 @@ type uname &>> /dev/null && \
 KUBE_PS1_SYMBOL_USE_IMG=true
 # Usse $(kube_ps1) somewhere
 
+SPACESHIP_HOST_SHOW=always
+SPACESHIP_USER_SHOW=always
 
 [ -v _os ] && \
-    PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
+    SPACESHIP_CHAR_PREFIX="%{%b%}%{%B%F{215}%}$_os%{%b%f%}%{%B%} "
+    #PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
+

@@ -6,8 +6,10 @@ zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 zsh-users/zsh-history-substring-search
 
+
 # Based on https://raw.githubusercontent.com/caarlos0/dotfiles/master/antibody/bundles.txt
 # these should be at last!
-sindresorhus/pure
+denysdovhan/spaceship-prompt
+# sindresorhus/pure
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search
