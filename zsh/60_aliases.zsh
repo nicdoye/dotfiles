@@ -63,6 +63,12 @@ npm_u2      ()
     npm up -g npm firebase-tools aws-sam-local
 }
 
+sdk_u    ()
+{
+    print_sep "sdk update"
+    sdk update
+}
+
 brew_cask_u ()
 {
     print_sep "brew cask list"
@@ -75,6 +81,7 @@ brew_cask_u ()
 
 optional_u ()
 {
+    sdk_u
     brew_cask_u
 }
 
