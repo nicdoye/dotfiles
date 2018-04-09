@@ -185,11 +185,15 @@ _di_all     ()
         -w ${mountpoint}/${pwd} ${image} $*
 }
 
-centos      () _di_all ${(%):-%N} $*
-fedora      () _di_all ${(%):-%N} $*
-ubuntu      () _di_all ${(%):-%N} $* 
-debian      () _di_all ${(%):-%N} $* 
-alpine      () _di_all ${(%):-%N} $*
+centos          () _di_all ${(%):-%N} $*
+fedora          () _di_all ${(%):-%N} $*
+ubuntu          () _di_all ${(%):-%N} $* 
+debian          () _di_all ${(%):-%N} $* 
+alpine          () _di_all ${(%):-%N} $*
+# Particular alpine (3.7/latest on 2018.04.09)
+alpine-fixed    () _di_all 'alpine@sha256:7b848083f93822dd21b0a2f14a110bd99f6efb4b838d499df6d04a49d0debf8b' $*
+# Particular centos (7.4.1708/latest on 2018.04.09)
+centos-fixed    () _di_all 'centos@sha256:bc494daa9d9ad7e37f93236fbd2c3f372739997c6336ef3c321e227f336e73d3' $*
 
 # Actual commands
 #aws         () di --volume ~/.aws:/root/.aws cgswong/aws:latest aws $*
@@ -197,12 +201,12 @@ alpine      () _di_all ${(%):-%N} $*
 #ggrep       () fedora grep $*
 
 # fedora/docker is faster than native which is faster than alpine/docker
-sha1sum     () fedora ${(%):-%N} $*
-sha224sum   () fedora ${(%):-%N} $*
-sha256sum   () fedora ${(%):-%N} $* 
-sha384sum   () fedora ${(%):-%N} $* 
-sha512sum   () fedora ${(%):-%N} $* 
-
+sha1sum     () alpine-fixed ${(%):-%N} $*
+sha256sum   () alpine-fixed ${(%):-%N} $* 
+sha512sum   () alpine-fixed ${(%):-%N} $* 
+# Not in alpine
+sha224sum   () centos-fixed ${(%):-%N} $*
+sha384sum   () centos-fixed ${(%):-%N} $* 
 # Brew/coreutils is faster than fedora/docker which is faster than alpine/docker
 #md5sum      () fedora ${(%):-%N} $*
 
