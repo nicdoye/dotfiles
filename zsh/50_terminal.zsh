@@ -20,7 +20,8 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt prompt_subst
 setopt autocd
-setopt correctall
+# Annoying
+unsetopt correctall
 setopt interactivecomments
 
 # Bizarre zshism
