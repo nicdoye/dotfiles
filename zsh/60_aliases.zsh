@@ -32,46 +32,63 @@ print_sep   ()
     printf -- "---- $*\t------------------------------------------------------\n"
 }
 
+print_36spacex ()
+{
+    for i in $(seq 0 35); do echo -n "$1 "; done ; echo
+}
+
+# There's no reason for these not to be in global scope
+print_72x   ()
+{
+    for i in $(seq 0 71); do echo -n $1; done ; echo
+}
+
 # There's no reason for these not to be in global scope
 brew_u      () 
 { 
-    print_sep "brew upgrade"
+    print_36spacex 🍺
     brew upgrade 
 }
 
 gcloud_u    ()
 {
-    print_sep "gcloud update"
+    print_36spacex 🌥
     gcloud components update --quiet
 }
 
 mas_u       ()
 {
-    print_sep "mas upgrade"
+    print_36spacex 🍎
     mas upgrade
 }
 
 antibody_u  ()
 {
-    print_sep "antibody update"
+    print_36spacex 💉
     antibody update
 }
 
-npm_u2      ()
+npm_u       ()
 {
-    print_sep "npm upgrade"
+    print_36spacex 🔥
     npm up -g npm firebase-tools aws-sam-local
 }
 
-sdk_u    ()
+sdk_u       ()
 {
-    print_sep "sdk update"
+    print_36spacex 🌟
     sdk update
+}
+
+gofish_u    ()
+{
+    print_36spacex 🐠
+    gofish upgrade
 }
 
 brew_cask_u ()
 {
-    print_sep "brew cask list"
+    print_36spacex 🛢️
     brew cask outdated
     for cask in $(brew cask outdated | awk '{ print $1 }' |  grep -v chef | xargs)
     do
@@ -89,19 +106,19 @@ bum         ()
 { 
     local all_p=$1
 
-    print_sep "starting upgrades"
+    print_36spacex 🏁
+    echo
+
+    gofish_u
     brew_u
     mas_u
-    npm_u2
+    npm_u
     antibody_u
     gcloud_u
-    if [[ '-a' == "$all_p" ]]
-    then
-        print_sep "upgrading optional items"
-        optional_u
-    fi
-        
-    print_sep "all finished"
+    [[ '-a' == "$all_p" ]] && optional_u
+    
+    echo
+    print_36spacex 🛑
 }
 
 bi          () brew info 	$* 
