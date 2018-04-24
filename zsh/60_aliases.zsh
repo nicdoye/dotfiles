@@ -19,10 +19,22 @@ lzmore      () __nic_pager $*
 xzmore      () __nic_pager $*
 top         () glances
 vim         () nvim $*
+github      () cd ${HOME}/vcs/github.com
+
+_java_version   () { 
+    sdk current java | grep ^'[[:alnum:]]' | awk '{print $4}' 
+}
+
+setmyokta   () {
+    sdk use java 8u152-zulu
+    cd "${HOME}/.aws"
+    setmyokta.sh $*
+    cd "${OLDPWD}"
+}
 
 
 # This is only for commands, not functions or aliases
-find_cmd () { whence -p $1 || echo false ; }
+find_cmd    () { whence -p $1 || echo false ; }
 
 pstree      () $(find_cmd pstree) -g2 -w $*
 l           () $(find_cmd m) lock
@@ -37,7 +49,6 @@ print_36spacex ()
     for i in $(seq 0 35); do echo -n "$1 "; done ; echo
 }
 
-# There's no reason for these not to be in global scope
 print_72x   ()
 {
     for i in $(seq 0 71); do echo -n $1; done ; echo
@@ -52,7 +63,7 @@ brew_u      ()
 
 gcloud_u    ()
 {
-    print_36spacex 🌥
+    print_36spacex '🌥 '
     gcloud components update --quiet
 }
 

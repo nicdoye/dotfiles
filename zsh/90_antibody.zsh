@@ -43,8 +43,14 @@ KUBE_PS1_SYMBOL_USE_IMG=true
 
 SPACESHIP_HOST_SHOW=always
 SPACESHIP_USER_SHOW=always
+SPACESHIP_PROMPT_PREFIXES_SHOW=false
+SPACESHIP_KUBECONTEXT_SYMBOL="${SPACESHIP_KUBECONTEXT_SYMBOL} "
+SPACESHIP_CHAR_SYMBOL="%{%b%}%{%B%F{215}%}$_os%{%b%f%}%{%B%} ${SPACESHIP_CHAR_SYMBOL}"
 
-[ -v _os ] && \
-    SPACESHIP_CHAR_PREFIX="%{%b%}%{%B%F{215}%}$_os%{%b%f%}%{%B%} "
-    #PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
+# Removed all prefices so hacked this into CHAR SYMBOL. #naughty
+#[ -v _os ] && \
+    #SPACESHIP_CHAR_PREFIX="%{%b%}%{%B%F{215}%}$_os%{%b%f%}%{%B%} "
+
+# Pure
+#PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
 

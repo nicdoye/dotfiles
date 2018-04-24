@@ -4,3 +4,4 @@
 *.bak
 *.orig
 *.prev
+.idea/
