@@ -38,6 +38,10 @@ npm_u       ()
 sdk_u       ()
 {
     print_36spacex 🌟
+    sdk selfupdate force
+    [[ -s "/Users/ndoye/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/ndoye/.sdkman/bin/sdkman-init.sh"
+    # There is a chance sdkman could update again between these two commands.
+    # which would cause the following to give a prompt :(
     sdk update
 }
 
@@ -59,7 +63,6 @@ brew_cask_u ()
 
 optional_u ()
 {
-    sdk_u
     brew_cask_u
 }
 
@@ -76,6 +79,7 @@ bum         ()
     npm_u
     antibody_u
     gcloud_u
+    sdk_u
     [[ '-a' == "$all_p" ]] && optional_u
     
     echo
