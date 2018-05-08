@@ -20,6 +20,10 @@ xzmore      () __nic_pager $*
 top         () glances
 vim         () nvim $*
 github      () cd ${HOME}/vcs/github.com
+# Aliases allow for command line completion, unlike functions
+alias       k=kubectl
+alias       h=helm
+alias       g=git
 
 _java_version   () { 
     sdk current java | grep ^'[[:alnum:]]' | awk '{print $4}' 

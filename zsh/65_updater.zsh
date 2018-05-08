@@ -32,7 +32,8 @@ antibody_u  ()
 npm_u       ()
 {
     print_36spacex 🔥
-    npm up -g npm firebase-tools aws-sam-local
+    npm i -g npm
+    npm up -g firebase-tools aws-sam-local
 }
 
 sdk_u       ()
