@@ -21,9 +21,27 @@ top         () glances
 vim         () nvim $*
 github      () cd ${HOME}/vcs/github.com
 # Aliases allow for command line completion, unlike functions
-alias       k=kubectl
-alias       h=helm
+alias       a=aws
 alias       g=git
+alias       h=helm
+alias       k=kubectl
+
+# Clone github and cd into it.
+# Could be made more generic.
+ghc         () {
+    local github_url=$1
+    local repo_root="${HOME}/vcs/github.com"
+
+    local github_user_project=$(echo "${github_url}"    | cut -f2 -d:)
+    local github_user=$(echo "${github_user_project}"   | cut -f1 -d/)
+    local github_project=$(echo $github_user_project    | cut -f2 -d/ | sed -e 's_.git$__' )
+    local github_user_dir="${repo_root}/${github_user}"
+
+    mkdir -p "${github_user_dir}" && \
+        cd "${github_user_dir}" && \
+        git clone "${github_url}" && \
+        cd "${github_project}"
+}
 
 _java_version   () { 
     sdk current java | grep ^'[[:alnum:]]' | awk '{print $4}' 
