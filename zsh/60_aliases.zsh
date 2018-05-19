@@ -22,6 +22,7 @@ vim         () nvim $*
 github      () cd ${HOME}/vcs/github.com
 # Aliases allow for command line completion, unlike functions
 alias       a=aws
+alias       c=curl
 alias       g=git
 alias       h=helm
 alias       k=kubectl

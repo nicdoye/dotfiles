@@ -11,7 +11,9 @@
     # Utility function - unused
     includer2 () {
         local filename=$1
-        [ -f "${filename}" ] && source "${filename}" || echo "Error with or in ${filename}"
+        # Removing error, because kubectl one returns 127 o_O
+        # [ -f "${filename}" ] && source "${filename}" || echo "Error with or in ${filename}"
+        [ -f "${filename}" ] && source "${filename}"
     }
 
     local secret_zshrc="${HOME}/.secrets/secrets.zsh"
