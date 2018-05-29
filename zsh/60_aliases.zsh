@@ -23,9 +23,34 @@ github      () cd ${HOME}/vcs/github.com
 # Aliases allow for command line completion, unlike functions
 alias       a=aws
 alias       c=curl
+alias       d=docker
 alias       g=git
 alias       h=helm
 alias       k=kubectl
+
+
+_kube_config () {
+    export KUBECONFIG="$1"
+}
+
+_ibm_kube_config () {
+    local datacentre="$1"
+    local cluster="$2"
+    _kube_config "${HOME}/.bluemix/plugins/container-service/clusters/${cluster}/kube-config-${datacentre}-${cluster}.yml"
+}
+
+kc () {
+    case "$1" in
+        'ibm' )
+            _ibm_kube_config 'lon04' 'nic-ibm-cluster-004'
+            ;;
+        * )
+            _kube_config "${HOME}/.kube/config"
+            ;;
+    esac
+}
+
+alias nic-ibm-cluster-004='kc ibm'
 
 # Clone github and cd into it.
 # Could be made more generic.

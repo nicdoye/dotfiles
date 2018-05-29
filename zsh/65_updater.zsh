@@ -80,7 +80,7 @@ bum         ()
     npm_u
     antibody_u
     gcloud_u
-    sdk_u
+    # sdk_u
     [[ '-a' == "$all_p" ]] && optional_u
     
     echo
