@@ -8,5 +8,8 @@
 #source ${brew_prefix}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 ########################################################################
     
-# This doesnt get sourced as part of the _fpath. Weird.
- source ${brew_prefix}/share/zsh/site-functions/_aws
+# AWS has its own wrapper
+for file in aws_zsh_completer.sh _kops
+do
+    source "${brew_prefix}/share/zsh/site-functions/${file}"
+done
