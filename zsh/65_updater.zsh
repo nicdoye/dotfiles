@@ -36,6 +36,12 @@ npm_u       ()
     npm up -g firebase-tools aws-sam-local
 }
 
+rust_u      ()
+{
+    print_36spacex ®
+    rustup update
+}
+
 sdk_u       ()
 {
     print_36spacex 🌟
@@ -80,6 +86,7 @@ bum         ()
     npm_u
     antibody_u
     gcloud_u
+    rust_u
     # sdk_u
     [[ '-a' == "$all_p" ]] && optional_u
     

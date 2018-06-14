@@ -1,15 +1,27 @@
 ########################################################################
 # ZSH
-# Now getting from bundle not brew
-#fpath=(${brew_prefix}/share/zsh-completions $fpath)
-#autoload -U compinit && compinit
- autoload -U +X compinit && compinit
- autoload -U +X bashcompinit && bashcompinit
+#
+# Brew site functions dir
+_site_functions="${brew_prefix}/share/zsh/site-functions"
+_local_functions="${HOME}/.dotfiles/zfunc"
+fpath+="${_site_functions}"
+fpath+="${_local_functions}"
+
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
 #source ${brew_prefix}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 ########################################################################
     
-# AWS has its own wrapper
-for file in aws_zsh_completer.sh _kops
+# I clearly don't understand fpath as some of these things just don't 
+# complete, unless I source them :-|
+# for i in /usr/local/share/zsh/site-functions/_* ; do j=$(basename $i | sed -e 's/.//'); grep -qL $j ~/.zcompdump || echo $j ; done
+
+for completion in awless kompose kops opam
 do
-    source "${brew_prefix}/share/zsh/site-functions/${file}"
+    source "${_site_functions}/_${completion}"
+done
+
+for completion in helm kubectl minikube ng
+do
+    source "${_local_functions}/_${completion}"
 done
