@@ -19,7 +19,6 @@ lzmore      () __nic_pager $*
 xzmore      () __nic_pager $*
 top         () glances
 vim         () nvim $*
-github      () cd ${HOME}/vcs/github.com
 # Aliases allow for command line completion, unlike functions
 alias       a=aws
 alias       b=brew
@@ -28,8 +27,10 @@ alias       d=docker
 alias       g=git
 alias       h=helm
 alias       k=kubectl
-alias       psa='pkill ssh-agent'
 
+alias       github="cd ${HOME}/vcs/github.com"
+alias       alf="cd ${HOME}/vcs/github.com/Alfresco"
+alias       psa='pkill ssh-agent'
 
 _kube_config () {
     export KUBECONFIG="$1"
@@ -43,9 +44,9 @@ _ibm_kube_config () {
 
 kc () {
     case "$1" in
-        'ibm' )
-            _ibm_kube_config 'lon04' 'nic-ibm-cluster-004'
-            ;;
+#        'ibm' )
+#            _ibm_kube_config 'lon04' 'nic-ibm-cluster-004'
+#            ;;
         'ps' )
             _kube_config "${HOME}/.kube/ps.dev.alfresco.me.yaml"
             ;;
@@ -55,7 +56,7 @@ kc () {
     esac
 }
 
-alias nic-ibm-cluster-004='kc ibm'
+#alias nic-ibm-cluster-004='kc ibm'
 
 # Clone github and cd into it.
 # Could be made more generic.
