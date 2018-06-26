@@ -31,7 +31,18 @@ alias       k=kubectl
 alias       github="cd ${HOME}/vcs/github.com"
 alias       alf="cd ${HOME}/vcs/github.com/Alfresco"
 alias       psa='pkill ssh-agent'
+alias       setmyokta.sh='setmyokta-nic.sh'
 
+o () {
+    local profile="$1"
+    local current_java=$(sdk c java | awk '{print $4}' | egrep '[[:alnum:]]')
+    local working_java='8u152-zulu'
+    sdk u java "${working_java}"
+
+    setmyokta.sh -p "${profile}"
+
+    sdk u java "${current_java}"
+}
 _kube_config () {
     export KUBECONFIG="$1"
 }
@@ -42,6 +53,7 @@ _ibm_kube_config () {
     _kube_config "${HOME}/.bluemix/plugins/container-service/clusters/${cluster}/kube-config-${datacentre}-${cluster}.yml"
 }
 
+
 kc () {
     case "$1" in
 #        'ibm' )
@@ -49,6 +61,9 @@ kc () {
 #            ;;
         'ps' )
             _kube_config "${HOME}/.kube/ps.dev.alfresco.me.yaml"
+            ;;
+        'nic' )
+            _kube_config "${HOME}/.kube/aws/nic.yaml"
             ;;
         * )
             _kube_config "${HOME}/.kube/config"
