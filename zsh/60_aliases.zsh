@@ -33,6 +33,7 @@ alias       alf="cd ${HOME}/vcs/github.com/Alfresco"
 alias       psa='pkill ssh-agent'
 alias       setmyokta.sh='setmyokta-nic.sh'
 
+# setmyokta -p wrapper
 o () {
     local profile="$1"
     local current_java=$(sdk c java | awk '{print $4}' | egrep '[[:alnum:]]')
@@ -40,33 +41,56 @@ o () {
     sdk u java "${working_java}"
 
     setmyokta.sh -p "${profile}"
-
     sdk u java "${current_java}"
 }
+
 _kube_config () {
     export KUBECONFIG="$1"
+    alias kubectl=kubectl-"$2"
+    alias helm="helm-$3"
+    [ -n "$4" ] && {
+        kubens "$4"
+        helm="helm-$3 --tiller-namespace $4"
+    }
 }
 
+# See assoc array in secrets
+_aws_profile () {
+    source "${HOME}/.secrets/k8s.zsh"
+    local profile="${k8s_to_aws_profile[$1]}"
+    aws sts get-caller-identity --output text --profile "${profile}" &>> /dev/null
+    [ $? != 0 ] && echo "Now run: o ${profile}"
+}
+
+# _ibm_kube_config 'lon04' 'nic-ibm-cluster-004'
 _ibm_kube_config () {
     local datacentre="$1"
     local cluster="$2"
-    _kube_config "${HOME}/.bluemix/plugins/container-service/clusters/${cluster}/kube-config-${datacentre}-${cluster}.yml"
+    _kube_config "${HOME}/.bluemix/plugins/container-service/clusters/${cluster}/kube-config-${datacentre}-${cluster}.yml" 1.10.4 2.9.1
 }
-
 
 kc () {
     case "$1" in
-#        'ibm' )
-#            _ibm_kube_config 'lon04' 'nic-ibm-cluster-004'
-#            ;;
         'ps' )
-            _kube_config "${HOME}/.kube/ps.dev.alfresco.me.yaml"
+            _aws_profile "$1"
+            _kube_config "${HOME}/.kube/ps.dev.alfresco.me.yaml" 1.9.7 2.8.2 nic
+            # Override
+            alias helm="helm-2.8.2 --tls --tiller-namespace nic"
             ;;
         'nic' )
-            _kube_config "${HOME}/.kube/aws/nic.yaml"
+            # Badly named eks cluster
+            _aws_profile "$1"
+            _kube_config "${HOME}/.kube/aws/nic.yaml" 1.10.4 2.9.1 dbp
+            ;;
+        'nic-insight' )
+            _aws_profile "$1"
+            _kube_config "${HOME}/.kube/nic-r-and-d/nic.yaml" 1.10.4 2.9.1 insight
+            export TILLER_NAMESPACE=insight
+            export HELM_HOME=~/.kube/nic-r-and-d/insight
+            alias helm="helm-2.9.1 --tls --tiller-namespace insight"
             ;;
         * )
-            _kube_config "${HOME}/.kube/config"
+            _kube_config "${HOME}/.kube/config" 1.10.4 2.9.1 default
             ;;
     esac
 }
