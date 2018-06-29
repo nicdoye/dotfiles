@@ -72,22 +72,23 @@ _ibm_kube_config () {
 kc () {
     case "$1" in
         'ps' )
-            _aws_profile "$1"
-            _kube_config "${HOME}/.kube/ps.dev.alfresco.me.yaml" 1.9.7 2.8.2 nic
-            # Override
+            # _aws_profile "$1"
+            _kube_config "${HOME}/.kube/alfresco/ps.yaml" 1.9.7 2.8.2 nic
             alias helm="helm-2.8.2 --tls --tiller-namespace nic"
             ;;
-        'nic' )
-            # Badly named eks cluster
-            _aws_profile "$1"
-            _kube_config "${HOME}/.kube/aws/nic.yaml" 1.10.4 2.9.1 dbp
-            ;;
-        'nic-insight' )
-            _aws_profile "$1"
-            _kube_config "${HOME}/.kube/nic-r-and-d/nic.yaml" 1.10.4 2.9.1 insight
+        '1.10-calico' )
+            # _aws_profile "$1"
+            _kube_config "${HOME}/.kube/alfresco/1.10-calico.yaml" 1.10.4 2.9.1 insight
             export TILLER_NAMESPACE=insight
-            export HELM_HOME=~/.kube/nic-r-and-d/insight
+            export HELM_HOME=~/.helm/alfresco/1.10-calico/insight/
             alias helm="helm-2.9.1 --tls --tiller-namespace insight"
+            ;;
+        'eks-ps' )
+            # _aws_profile "$1"
+            _kube_config "${HOME}/.kube/alfresco/eks-ps.yaml" 1.10.4 2.9.1 default
+            #export TILLER_NAMESPACE=insight
+            #export HELM_HOME=~/.helm/alfresco/1.10-calico/insight/
+            #alias helm="helm-2.9.1 --tls --tiller-namespace insight"
             ;;
         * )
             _kube_config "${HOME}/.kube/config" 1.10.4 2.9.1 default
