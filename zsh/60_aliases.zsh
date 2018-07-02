@@ -131,7 +131,7 @@ setmyokta   () {
 find_cmd    () { whence -p $1 || echo false ; }
 
 pstree      () $(find_cmd pstree) -g2 -w $*
-l           () $(find_cmd m) lock
+#l           () $(find_cmd m) lock
 
 print_sep   ()
 {
