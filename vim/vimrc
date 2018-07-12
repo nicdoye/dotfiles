@@ -1,20 +1,21 @@
-if has("gui")
+if has("nvim")
+    set termguicolors
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+    execute pathogen#infect('bundle/{}', '~/.config/nvim/bundle/{}')
+elseif has("gui")
     if has("gui_gtk2")
         set guifont=Inconsolata\ 12
     elseif has("gui_win32")
         set guifont=Consolas:h10:cANSI
     endif
-elseif has("nvim")
-    set termguicolors
-    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-    execute pathogen#infect('bundle/{}', '~/.config/nvim/bundle/{}')
 endif
 
-try
-    colorscheme seti
-catch
-    colorscheme desert
-endtry
+call plug#begin('~/.vim/plugged')
+Plug 'hzchirs/vim-material'
+
+" Dark
+set background=dark
+colorscheme vim-material
 
 syntax on
 set nolist

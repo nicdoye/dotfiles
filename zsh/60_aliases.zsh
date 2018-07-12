@@ -4,9 +4,12 @@
 # Remember one-liners containing || etc., need to be enclosed by {}
 ########################################################################
 
-export PAGER=vimpager
+# Hack around vimpager being too clever. Use a pre-generated
+# vimpager config. 
 
-__nic_pager () ${PAGER} $*
+__nic_pager () { vim -u ~/.dotfiles/vimpager/vimpager.vim $* ; }
+export PAGER=__nic_pager
+
 less        () __nic_pager $*
 zless       () __nic_pager $*
 bzless      () __nic_pager $*
@@ -18,7 +21,7 @@ bzmore      () __nic_pager $*
 lzmore      () __nic_pager $*
 xzmore      () __nic_pager $*
 top         () glances
-vim         () nvim $*
+alias       vim=nvim
 # Aliases allow for command line completion, unlike functions
 alias       a=aws
 alias       b=brew
