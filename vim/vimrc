@@ -1,7 +1,8 @@
 if has("nvim")
+    " If you unset this you get the default background but none of the rest of
+    " the theme
     set termguicolors
     set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-    execute pathogen#infect('bundle/{}', '~/.config/nvim/bundle/{}')
 elseif has("gui")
     if has("gui_gtk2")
         set guifont=Inconsolata\ 12
@@ -10,12 +11,19 @@ elseif has("gui")
     endif
 endif
 
+execute pathogen#infect('bundle/{}', '~/.config/nvim/bundle/{}')
 call plug#begin('~/.vim/plugged')
 Plug 'hzchirs/vim-material'
 
 " Dark
 set background=dark
 colorscheme vim-material
+
+" This works on the modeline :-/
+"hi Normal guibg=NONE
+"hi Normal ctermbg=NONE
+" The actual colour set by material theme is
+"hi Normal ctermbg=#263238
 
 syntax on
 set nolist
