@@ -1,5 +1,5 @@
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/ndoye/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
@@ -23,3 +23,6 @@
 	required = true
 [push]
 	default = simple
+[user]
+	name = Nic Doye
+	email = nic.doye@alfresco.com

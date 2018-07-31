@@ -7,19 +7,20 @@
 # Hack around vimpager being too clever. Use a pre-generated
 # vimpager config. 
 
-__nic_pager () { vim -u ~/.dotfiles/vimpager/vimpager.vim $* ; }
-export PAGER=__nic_pager
+#__nic_pager () { vim -u ~/.dotfiles/vimpager/vimpager.vim $* ; }
+# alias __nic_pager=vim -u ~/.dotfiles/vimpager/vimpager.vim
+# export PAGER=__nic_pager
 
-less        () __nic_pager $*
-zless       () __nic_pager $*
-bzless      () __nic_pager $*
-lzless      () __nic_pager $*
-xzless      () __nic_pager $*
-more        () __nic_pager $*
-zmore       () __nic_pager $*
-bzmore      () __nic_pager $*
-lzmore      () __nic_pager $*
-xzmore      () __nic_pager $*
+#less        () __nic_pager $*
+#zless       () __nic_pager $*
+#bzless      () __nic_pager $*
+#lzless      () __nic_pager $*
+#xzless      () __nic_pager $*
+#more        () __nic_pager $*
+#zmore       () __nic_pager $*
+#bzmore      () __nic_pager $*
+#lzmore      () __nic_pager $*
+#xzmore      () __nic_pager $*
 top         () glances
 alias       vim=nvim
 # Aliases allow for command line completion, unlike functions
@@ -66,18 +67,27 @@ _aws_profile () {
 }
 
 # _ibm_kube_config 'lon04' 'nic-ibm-cluster-004'
-_ibm_kube_config () {
-    local datacentre="$1"
-    local cluster="$2"
-    _kube_config "${HOME}/.bluemix/plugins/container-service/clusters/${cluster}/kube-config-${datacentre}-${cluster}.yml" 1.10.4 2.9.1
-}
+#_ibm_kube_config () {
+#    local datacentre="$1"
+#    local cluster="$2"
+#    _kube_config "${HOME}/.bluemix/plugins/container-service/clusters/${cluster}/kube-config-${datacentre}-${cluster}.yml" 1.10.4 2.9.1
+#}
 
 kc () {
     case "$1" in
+        'docker-for-desktop' )
+            _kube_config "${HOME}/.kube/desktop/docker-for-desktop.yaml" 1.10.3 2.9.1 nic
+            export HELM_HOME=~/.helm
+            ;;
+        'minikube' )
+            _kube_config "${HOME}/.kube/desktop/minikube.yaml" 1.10.3 2.9.1 nic
+            export HELM_HOME=~/.helm
+            ;;
         'ps' )
             # _aws_profile "$1"
             _kube_config "${HOME}/.kube/alfresco/ps.yaml" 1.9.7 2.8.2 nic
             alias helm="helm-2.8.2 --tls --tiller-namespace nic"
+            export HELM_HOME=~/.helm
             ;;
         '1.10-calico' )
             # _aws_profile "$1"
@@ -89,6 +99,7 @@ kc () {
         'eks-ps' )
             # _aws_profile "$1"
             _kube_config "${HOME}/.kube/alfresco/eks-ps.yaml" 1.10.4 2.9.1 default
+            export HELM_HOME=~/.helm
             #export TILLER_NAMESPACE=insight
             #export HELM_HOME=~/.helm/alfresco/1.10-calico/insight/
             #alias helm="helm-2.9.1 --tls --tiller-namespace insight"

@@ -80,7 +80,7 @@ bum         ()
     print_36spacex 🏁
     echo
 
-    # gofish_u
+    gofish_u
     brew_u
     mas_u
     npm_u
