@@ -89,12 +89,12 @@ kc () {
             alias helm="helm-2.8.2 --tls --tiller-namespace nic"
             export HELM_HOME=~/.helm
             ;;
-        '1.10-calico' )
+        'insight' )
             # _aws_profile "$1"
-            _kube_config "${HOME}/.kube/alfresco/insight3-1.10-calico.yaml" 1.10.5 2.9.1 insight3
-            export TILLER_NAMESPACE=insight3
-            export HELM_HOME=~/.helm/alfresco/1.10-calico/insight3/
-            alias helm="helm-2.9.1 --tls --tiller-namespace insight3"
+            _kube_config "${HOME}/.kube/alfresco/insight-calico.yaml" 1.10.5 2.9.1 insight
+            export TILLER_NAMESPACE='insight'
+            export HELM_HOME="${HOME}/.helm/alfresco/insight-calico/insight"
+            alias helm="helm-2.9.1 --tls --tiller-namespace ${TILLER_NAMESPACE}"
             ;;
         'eks-ps' )
             # _aws_profile "$1"

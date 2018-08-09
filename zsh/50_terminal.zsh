@@ -24,6 +24,9 @@ setopt autocd
 unsetopt correctall
 setopt interactivecomments
 
+# ripgrep config
+export RIPGREP_CONFIG_PATH="${HOME}/.dotfiles/ripgrep/ripgreprc"
+
 # Bizarre zshism
 # alias history="history 1"
 # Equivalent/better as a function.
