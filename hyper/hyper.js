@@ -147,7 +147,7 @@ module.exports = {
     confirmQuit: true,
     // hyperterm-visor plugin
     visor: {
-      hotkey: 'CommandOrControl+Shift+T',
+      hotkey: 'CommandOrControl+Alt+Shift+T',
       position: 'bottom', // or left, right, bottom
       width: 900, // Optional, defaults to half of viewable area for horizontal positions, 100% for vertical
       height: 600, // Optional, defaults to half of viewable area for vertical positions, 100% for horizontal

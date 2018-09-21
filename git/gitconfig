@@ -23,6 +23,5 @@
 	required = true
 [push]
 	default = simple
-[user]
-	name = Nic Doye
-	email = nic.doye@alfresco.com
+[credential]
+	helper = osxkeychain
