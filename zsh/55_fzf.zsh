@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # https://github.com/junegunn/fzf/wiki/Color-schemes#alternate-solarized-lightdark-theme
 
 _gen_fzf_default_opts() {

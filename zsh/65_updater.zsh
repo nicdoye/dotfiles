@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # vim: set filetype=sh :
 
 ########################################################################
@@ -82,7 +84,8 @@ bum         ()
 
     gofish_u
     brew_u
-    mas_u
+    # Uninstalled mas with Mojave
+    # mas_u
     npm_u
     antibody_u
     gcloud_u

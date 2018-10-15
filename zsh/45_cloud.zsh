@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # IBM Cloud
 export BLUEMIX_COLOR=true
 

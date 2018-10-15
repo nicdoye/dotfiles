@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # SHELL
 export EDITOR=nvim
 # This is idiotic - setting your editor to vim means it assumes you

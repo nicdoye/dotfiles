@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 ########################################################################
 # Homebrew
 # Sets brew_prefix to output of the anonymous function
