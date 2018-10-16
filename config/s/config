@@ -1,0 +1,30 @@
+provider: duckduckgo
+
+customProviders [
+  {
+    name: ts
+    url: "https://ts.alfresco.com/share/page/site/DBP/dp/ws/faceted-search#searchTerm=%s&scope=repo&sortField=null"
+    tags: [ts]
+  }
+  {
+    name: jira
+    url: "https://issues.alfresco.com/jira/secure/QuickSearch.jspa?searchString=%s"
+	tags: [jira]
+  }
+  {
+    name: w3
+    url: "https://w3.alfresco.com/confluence/dosearchsite.action?queryString=foo%s"
+	tags: [w3]
+  }
+  {
+    name: quay
+    url: "https://quay.io/search?q=%s"
+	tags: [quay]
+  }
+  {
+    name: gitlab
+    url: "https://git.alfresco.com/search?utf8=✓&search=%s&group_id=&project_id=&repository_ref="
+    tags: [gitlab]
+  }
+]
+
