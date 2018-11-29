@@ -32,6 +32,7 @@ alias       c=curl
 alias       d=docker
 alias       g=git
 alias       h=helm
+alias       i=istioctl
 alias       k=kubectl
 
 alias       github="cd ${HOME}/vcs/github.com"
@@ -105,6 +106,12 @@ kc () {
             #export TILLER_NAMESPACE=insight
             #export HELM_HOME=~/.helm/alfresco/1.10-calico/insight/
             #alias helm="helm-2.9.1 --tls --tiller-namespace insight"
+            ;;
+        'deploy-363-15' )
+            export HELM_HOME=~/.helm
+            export AWS_PROFILE=engineering-ndoye
+            export AWS_REGION=us-east-1
+            _kube_config "${HOME}/.kube/alfresco/deploy-363-15.yaml" 1.10.3 2.9.1 nic
             ;;
         * )
             _kube_config "${HOME}/.kube/config" 1.10.4 2.9.1 default
