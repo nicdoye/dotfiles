@@ -13,6 +13,12 @@ brew_u      ()
     brew upgrade 
 }
 
+topgrade_u  ()
+{
+    print_36spacex 🎩
+    topgrade --no-retry --no-vim
+}
+
 gcloud_u    ()
 {
     print_36spacex '🌥 '
@@ -82,14 +88,22 @@ bum         ()
     print_36spacex 🏁
     echo
 
-    gofish_u
-    brew_u
-    # Uninstalled mas with Mojave
+    # Dead?
+    # gofish_u
+    # In topgrade
+    # brew_u
+    # In topgrade
     # mas_u
-    npm_u
+    # In topgrade
+    # npm_u
+
+    topgrade_u
     antibody_u
     gcloud_u
-    rust_u
+
+    # In topgrade
+    # rust_u
+
     # sdk_u
     [[ '-a' == "$all_p" ]] && optional_u
     
