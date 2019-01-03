@@ -41,7 +41,7 @@ npm_u       ()
 {
     print_36spacex 🔥
     npm i -g npm
-    npm up -g firebase-tools aws-sam-local
+    npm up -g firebase-tools aws-sam-local @aws-amplify/cli
 }
 
 rust_u      ()
