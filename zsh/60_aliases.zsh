@@ -43,8 +43,8 @@ alias       setmyokta.sh='setmyokta-nic.sh'
 # setmyokta -p wrapper
 o () {
     local profile="$1"
-    local current_java=$(sdk c java | awk '{print $4}' | egrep '[[:alnum:]]')
-    local working_java='8u152-zulu'
+    local current_java=$(sdk c java | /usr/bin/awk '{print $4}' | egrep '[[:alnum:]]')
+    local working_java='8.0.202-amzn'
     sdk u java "${working_java}"
 
     setmyokta.sh -p "${profile}"
@@ -139,7 +139,7 @@ ghc         () {
 }
 
 _java_version   () { 
-    sdk current java | grep ^'[[:alnum:]]' | awk '{print $4}' 
+    sdk current java | grep ^'[[:alnum:]]' | /usr/bin/awk '{print $4}' 
 }
 
 setmyokta   () {
@@ -313,4 +313,22 @@ terraform-latest    () di hashicorp/terraform:latest $*
 packer-latest       () {
     local packer_root='/opt/'
     di -v $PWD:${packer_root} hashicorp/packer:light $(echo $* | sed -E "s_([[:alnum:]_-]*.json)_${packer_root}\1_")
+}
+
+# From Alex
+getSecret() {
+    opt=SecretString
+    while getopts :b: o
+    do  case "$o" in
+        b) opt=SecretBinary
+            shift
+            ;;
+        [?]) echo >&2 "Usage: $0 [-b]  secret.id"
+        esac
+    done
+    aws secretsmanager get-secret-value --secret-id $1 --region us-east-1 |jq -r .${opt}
+}
+
+createSecret() {
+aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-85e9-55c96f5f80c3 --secret-string "${2}" --region us-east-1
 }
