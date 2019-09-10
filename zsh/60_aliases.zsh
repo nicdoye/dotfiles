@@ -308,8 +308,8 @@ vdir        () ${(%):-g%N} $*
 # Not used too much yet.
 che         () di -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/che:/data eclipse/che start
 # Specific terraform version for alf
-terraform-0-9-11    () di hashicorp/terraform:0.9.11 $*
-terraform-latest    () di hashicorp/terraform:latest $*
+#terraform-0-9-11    () di hashicorp/terraform:0.9.11 $*
+#terraform-latest    () di hashicorp/terraform:latest $*
 packer-latest       () {
     local packer_root='/opt/'
     di -v $PWD:${packer_root} hashicorp/packer:light $(echo $* | sed -E "s_([[:alnum:]_-]*.json)_${packer_root}\1_")
