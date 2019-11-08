@@ -18,7 +18,7 @@ autoload -U +X bashcompinit && bashcompinit
 # complete, unless I source them :-|
 # for i in /usr/local/share/zsh/site-functions/_* ; do j=$(basename $i | sed -e 's/.//'); grep -qL $j ~/.zcompdump || echo $j ; done
 
-for completion in awless kompose kops opam
+for completion in awless 
 do
     source "${_site_functions}/_${completion}"
 done

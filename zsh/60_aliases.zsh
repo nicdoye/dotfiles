@@ -332,3 +332,6 @@ getSecret() {
 createSecret() {
 aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-85e9-55c96f5f80c3 --secret-string "${2}" --region us-east-1
 }
+
+gdp         () { git checkout develop && git pull; }
+
