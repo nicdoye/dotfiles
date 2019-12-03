@@ -336,4 +336,8 @@ aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-8
 }
 
 gdp         () { git checkout develop && git pull; }
-
+gpu         () { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; }
+alias       gp="git pull"
+alias       ga="git add ."
+alias       gc="git commit -a -m"
+alias       gs="git status"
