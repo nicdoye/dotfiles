@@ -341,3 +341,6 @@ alias       gp="git pull"
 alias       ga="git add ."
 alias       gc="git commit -a -m"
 alias       gs="git status"
+
+alias       taa="terragrunt apply-all"
+alias       tda="terragrunt destroy-all"
