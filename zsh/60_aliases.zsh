@@ -303,15 +303,6 @@ vdir        () ${(%):-g%N} $*
 # Supplied by brew gnu-tar
 # Nothing to do for gtar 
 
-# Supplied by nmap dmg
-#nmap        () di uzyexe/nmap $*
-#irssi       () di -e TERM -u $(id -u):$(id -g) -v /Users/ndoye/.irssi:/home/user/.irssi:ro ${(%):-%N}
-
-# Not used too much yet.
-che         () di -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/che:/data eclipse/che start
-# Specific terraform version for alf
-#terraform-0-9-11    () di hashicorp/terraform:0.9.11 $*
-#terraform-latest    () di hashicorp/terraform:latest $*
 packer-latest       () {
     local packer_root='/opt/'
     di -v $PWD:${packer_root} hashicorp/packer:light $(echo $* | sed -E "s_([[:alnum:]_-]*.json)_${packer_root}\1_")
@@ -337,6 +328,7 @@ aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-8
 
 gdp         () { git checkout develop && git pull; }
 gpu         () { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; }
+alias       gcb="git checkout -b"
 alias       gp="git pull"
 alias       ga="git add ."
 alias       gc="git commit -a -m"
