@@ -16,8 +16,7 @@ brew_u      ()
 topgrade_u  ()
 {
     print_36spacex 🎩
-    # See https://github.com/r-darwish/topgrade/issues/263
-    topgrade --no-retry --disable vim gem node go opam
+    topgrade 
 }
 
 gcloud_u    ()

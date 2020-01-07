@@ -336,3 +336,5 @@ alias       gs="git status"
 
 alias       taa="terragrunt apply-all"
 alias       tda="terragrunt destroy-all"
+
+sac         () { ssh -A centos@$1 ; }
