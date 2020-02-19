@@ -6,7 +6,9 @@
 () {
     # Run this first. Not at the end or you put /usr/local/bin etc. in front of
     # rbenv et al.
-    eval $(/usr/libexec/path_helper -s)
+    if test -f /usr/libexec/path_helper; then
+        eval $(/usr/libexec/path_helper -s)
+    fi
 
     export dotfiles_dir="${HOME}/.dotfiles"
 

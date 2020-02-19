@@ -7,7 +7,9 @@ export EDITOR=nvim
 bindkey -e
 export CLICOLOR=1
 # https://github.com/neovim/neovim/wiki/FAQ#my-ctrl-h-mapping-doesnt-work
-tic ~/.${TERM}.ti
+if test -f ~/.${TERM}.ti; then
+    tic ~/.${TERM}.ti
+fi
 #
 export LSCOLORS=Gxfxcxdxbxegedabagacad
 export TERM=xterm-256color

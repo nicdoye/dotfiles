@@ -40,8 +40,6 @@ alias       alf="cd ${HOME}/vcs/github.com/Alfresco"
 alias       psa='pkill ssh-agent'
 alias       setmyokta.sh='setmyokta-nic.sh'
 
-alias       aws=aws2
-
 # setmyokta -p wrapper
 o () {
     local profile="$1"
