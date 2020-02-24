@@ -24,7 +24,9 @@
 #lzmore      () __nic_pager $*
 #xzmore      () __nic_pager $*
 top         () glances
-alias       vim=nvim
+if type nvim &>> /dev/null; then
+    alias       vim=nvim
+fi
 # Aliases allow for command line completion, unlike functions
 alias       a=aws
 alias       b=brew
@@ -334,5 +336,7 @@ alias       gs="git status"
 
 alias       taa="terragrunt apply-all"
 alias       tda="terragrunt destroy-all"
+
+rtaa        () { rm -rf */.terragrunt-cache/ ; terragrunt apply-all ; }
 
 sac         () { ssh -A centos@$1 ; }
