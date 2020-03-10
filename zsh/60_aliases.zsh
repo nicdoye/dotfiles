@@ -338,5 +338,6 @@ alias       taa="terragrunt apply-all"
 alias       tda="terragrunt destroy-all"
 
 rtaa        () { rm -rf */.terragrunt-cache/ ; terragrunt apply-all ; }
+alias       traa=rtaa
 
 sac         () { ssh -A centos@$1 ; }

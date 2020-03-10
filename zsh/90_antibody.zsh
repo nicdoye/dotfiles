@@ -1,10 +1,5 @@
 #!/bin/zsh
 
-if type antibody &>> /dev/null; then
-    source <(antibody init)
-    antibody bundle < "${dotfiles_dir}/antibody/bundles.txt" > ~/.zsh_plugins.sh
-fi
-
 # macOS
 _nic_macos_os () {
     system_profiler SPSoftwareDataType | grep -w Version | cut -f2 -d: | /usr/bin/awk '{print $1 " " $2}' | xargs
@@ -43,8 +38,27 @@ type system_profiler &>> /dev/null && \
 type lsb_release &>> /dev/null && \
     _os=$(_nic_lsb_os)
 
+if [ -z "${_os}" ]; then
+    # Still unset?
+    if [ -f /etc/os-release ]; then
+        _os="$(/usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | cut -f2 -d= | tr -d '"')"
+        export PATH="${HOME}/opt/linux/bin:${PATH}"
+    fi
+fi
+
 type uname &>> /dev/null && \
     _os=$(_nic_arch "${_os}")
+
+if type antibody &>> /dev/null; then
+    source <(antibody init)
+    if [ $(echo $ZSH_VERSION | cut -f1 -d.) -ge 5 ] && [ $(echo $ZSH_VERSION | cut -f2 -d.) -ge 2 ]; then 
+        antibody bundle < "${dotfiles_dir}/antibody/bundles.txt" > ~/.zsh_plugins.sh
+    else
+        # Spaceship doesn't work on CentOS 7, because zsh is too old. (5.0.x vs 5.2 minimum)
+        # https://github.com/denysdovhan/spaceship-prompt/issues/638
+        cat "${dotfiles_dir}/antibody/bundles.txt" | /usr/bin/grep -v 'denysdovhan/spaceship-prompt' | antibody bundle  > ~/.zsh_plugins.sh
+    fi
+fi
 
 # Move to a function and get working
 [ -f /usr/local/share/kube-ps1.sh ] && source /usr/local/share/kube-ps1.sh
