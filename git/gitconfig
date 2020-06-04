@@ -28,3 +28,5 @@
 [user]
 	name = Nic Doye
 	email = nic.doye@alfresco.com
+[pull]
+	rebase = false
