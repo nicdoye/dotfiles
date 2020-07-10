@@ -326,12 +326,36 @@ createSecret() {
 aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-85e9-55c96f5f80c3 --secret-string "${2}" --region us-east-1
 }
 
+disable_cis () {
+    local repo=$(basename $(git rev-parse --show-toplevel))
+    if [ "${repo}" = 'paas-base-ami' ]; then
+        sed -i '' 's/cis_enabled: true/cis_enabled: false/' playbooks/environments/acs/acs-all.yaml
+    fi
+}
+
+enable_cis () {
+    local repo=$(basename $(git rev-parse --show-toplevel))
+    if [ "${repo}" = 'paas-base-ami' ]; then
+        sed -i '' 's/cis_enabled: false/cis_enabled: true/' playbooks/environments/acs/acs-all.yaml
+    fi
+}
+
+ga          () {
+    enable_cis
+    git add .
+    disable_cis
+}
+
+gc          () {
+    enable_cis
+    git commit -a -m "$*"
+    disable_cis
+}
+
 gdp         () { git checkout develop && git pull; }
 gpu         () { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; }
 alias       gcb="git checkout -b"
 alias       gp="git pull"
-alias       ga="git add ."
-alias       gc="git commit -a -m"
 alias       gs="git status"
 
 alias       taa="terragrunt apply-all"
