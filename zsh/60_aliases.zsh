@@ -46,7 +46,7 @@ alias       setmyokta.sh='setmyokta-nic.sh'
 o () {
     local profile="$1"
     local current_java=$(sdk c java | /usr/bin/awk '{print $4}' | egrep '[[:alnum:]]')
-    local working_java='8.0.202-amzn'
+    local working_java='8.0.252.hs-adpt'
     sdk u java "${working_java}"
 
     setmyokta.sh -p "${profile}"
