@@ -357,11 +357,26 @@ gpu         () { git push --set-upstream origin $(git rev-parse --abbrev-ref HEA
 alias       gcb="git checkout -b"
 alias       gp="git pull"
 alias       gs="git status"
+alias       gdh="git diff head"
+alias       gdd="git diff develop"
+alias       gmd="git merge develop"
 
 alias       taa="terragrunt apply-all"
 alias       tda="terragrunt destroy-all"
+alias       tdai="tda --terragrunt-ignore-dependency-errors"
 
-rtaa        () { rm -rf */.terragrunt-cache/ ; terragrunt apply-all ; }
+rtaa        () { 
+    rm -rf */.terragrunt-cache/ .terragrunt-cache/ 
+    terragrunt apply-all 
+}
 alias       traa=rtaa
 
 sac         () { ssh -A centos@$1 ; }
+
+paas-local  () {
+    cd ~/vcs/github.com/Alfresco/paas-control-plane/utils
+    ./paas-local.sh $1
+}
+
+alias       pls="paas-local start"
+alias       plc="paas-local connect"
