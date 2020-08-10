@@ -380,3 +380,15 @@ paas-local  () {
 
 alias       pls="paas-local start"
 alias       plc="paas-local connect"
+
+aws-migrate-repo    () {
+    local oldrepo=$(git remote -v | head -1 | awk '{print $2}')
+    local region=$(echo ${oldrepo} | cut -f2 -d.)
+    local reponame=$(basename ${oldrepo})
+    local newrepo="codecommit::${region}://${reponame}"
+
+    git remote remove origin
+    git remote add origin $newrepo
+    git fetch
+    git branch --set-upstream-to=origin/develop develop
+}

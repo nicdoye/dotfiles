@@ -42,7 +42,6 @@ if [ -z "${_os}" ]; then
     # Still unset?
     if [ -f /etc/os-release ]; then
         _os="$(/usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | cut -f2 -d= | tr -d '"')"
-        export PATH="${HOME}/opt/linux/bin:${PATH}"
     fi
 fi
 
