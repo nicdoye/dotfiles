@@ -69,10 +69,10 @@ gofish_u    ()
 brew_cask_u ()
 {
     print_36spacex 🛢️
-    brew cask outdated
-    for cask in $(brew cask outdated | /usr/bin/awk '{ print $1 }' |  grep -v chef | xargs)
+    brew outdated --cask
+    for cask in $(brew outdated --cask | /usr/bin/awk '{ print $1 }' |  grep -v chef | xargs)
     do
-        brew cask reinstall "$cask"
+        brew reinstall "$cask"
     done
 }
 
