@@ -223,9 +223,9 @@ __nic_grep       ()
 lgrep       () __nic_grep -l $*
 Hgrep       () __nic_grep -H $*
 
-git-all     () { git commit -a -m "$*" && git push }
-git-ndoye   () { git-all "$*" ; ssh -At pinf07 'sudo su -lc "puppet-code deploy ndoye --wait"' }
-git-remind  () { git branch && git status }
+# git-all     () { git commit -a -m "$*" && git push }
+# git-ndoye   () { git-all "$*" ; ssh -At pinf07 'sudo su -lc "puppet-code deploy ndoye --wait"' }
+# git-remind  () { git branch && git status }
 
 #tiff2png    () {
     #local ifile=$1
@@ -303,10 +303,10 @@ vdir        () ${(%):-g%N} $*
 # Supplied by brew gnu-tar
 # Nothing to do for gtar 
 
-packer-latest       () {
-    local packer_root='/opt/'
-    di -v $PWD:${packer_root} hashicorp/packer:light $(echo $* | sed -E "s_([[:alnum:]_-]*.json)_${packer_root}\1_")
-}
+# packer-latest       () {
+#     local packer_root='/opt/'
+#     di -v $PWD:${packer_root} hashicorp/packer:light $(echo $* | sed -E "s_([[:alnum:]_-]*.json)_${packer_root}\1_")
+# }
 
 # From Alex
 getSecret() {
@@ -319,24 +319,26 @@ getSecret() {
         [?]) echo >&2 "Usage: $0 [-b]  secret.id"
         esac
     done
-    aws secretsmanager get-secret-value --secret-id $1 --region us-east-1 |jq -r .${opt}
+    aws secretsmanager get-secret-value --secret-id $1 --region us-east-1 | jq -r .${opt}
 }
 
 createSecret() {
-aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-85e9-55c96f5f80c3 --secret-string "${2}" --region us-east-1
+    aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-85e9-55c96f5f80c3 --secret-string "${2}" --region us-east-1
 }
 
 disable_cis () {
-    local repo=$(basename $(git rev-parse --show-toplevel))
+    local top_level="$(git rev-parse --show-toplevel)"
+    local repo=$(basename ${top_level})
     if [ "${repo}" = 'paas-base-ami' ]; then
-        sed -i '' 's/cis_enabled: true/cis_enabled: false/' playbooks/environments/acs/acs-all.yaml
+        sed -i '' 's/cis_enabled: true/cis_enabled: false/' "${top_level}/playbooks/environments/acs/acs-all.yaml"
     fi
 }
 
 enable_cis () {
-    local repo=$(basename $(git rev-parse --show-toplevel))
+    local top_level="$(git rev-parse --show-toplevel)"
+    local repo=$(basename ${top_level})
     if [ "${repo}" = 'paas-base-ami' ]; then
-        sed -i '' 's/cis_enabled: false/cis_enabled: true/' playbooks/environments/acs/acs-all.yaml
+        sed -i '' 's/cis_enabled: false/cis_enabled: true/' "${top_level}/playbooks/environments/acs/acs-all.yaml"
     fi
 }
 
