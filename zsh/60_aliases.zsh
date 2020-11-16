@@ -369,7 +369,7 @@ alias       tdai="tda --terragrunt-ignore-dependency-errors"
 
 rtaa        () { 
     rm -rf */.terragrunt-cache/ .terragrunt-cache/ 
-    terragrunt apply-all 
+    terragrunt apply-all $*
 }
 alias       traa=rtaa
 
@@ -382,6 +382,21 @@ paas-local  () {
 
 alias       pls="paas-local start"
 alias       plc="paas-local connect"
+
+_build      () {
+    local _old_dir="${PWD}"
+    local caller=$funcstack[2]
+
+    cd ~/vcs/github.com/Alfresco/paas-base-ami/src/main/scripts
+    ./${caller}.sh
+    cd "${_old_dir}"
+}
+
+build-bastion () { _build ; }
+build-json2ldap () { _build ; }
+build-reposmall () { _build ; }
+build-search () { _build ; }
+build-transform-service () { _build ; }
 
 aws-migrate-repo    () {
     local oldrepo=$(git remote -v | head -1 | awk '{print $2}')
