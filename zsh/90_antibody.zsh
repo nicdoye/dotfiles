@@ -15,13 +15,12 @@ _nic_macos_cpu_temp () {
 
 # Linux
 _nic_lsb_os () {
-    local lsb_i="$(lsb_release -i | /usr/bin/awk '{print $2}')"
-    local lsb_r="$(lsb_release -r | /usr/bin/awk '{print $2}')"
-
-    # RHEL Hack
-    [ "${lsb_i}" = 'RedHatEnterpriseServer' ] && lsb_i='RHEL'
-
-    echo "${lsb_i} ${lsb_r}"
+    echo "$(lsb_release -ds | \
+            tr -d '"' | \
+            sed -e 's/release//' \
+                -e 's/([^)]*)//' \
+                -e 's/\s\+/ /g' \
+                -e 's/\s*$//')"
 }
 
 # Append arch
@@ -34,23 +33,27 @@ _nic_arch () {
 }
 
 _nic_os_release_os () {
-    echo "$(/usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | cut -f2 -d= | tr -d '"')"
+    echo "$(/usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | \
+                cut -f2 -d= | \
+                tr -d '"' | \
+                sed -e 's/([^)]*)//' \
+                    -e 's/\s\+/ /g' \
+                    -e 's/\s*$//')"
 }
 
 if type system_profiler &>> /dev/null &&; then \
     _os=$(_nic_macos_os)
 fi
 
-if [[ -z "${_os}" ]] && [[ -r /etc/os-release ]]; then \
-    _os=$(_nic_os_release_os)
-fi 
-
 if [[ -z "${_os}" ]] && type lsb_release &>> /dev/null; then \
     _os=$(_nic_lsb_os)
 fi
 
+if [[ -z "${_os}" ]] && [[ -r /etc/os-release ]]; then \
+    _os=$(_nic_os_release_os)
+fi 
+
 if [ -z "${_os}" ]; then
-    # Still unset?
     _os='Unknown'
 fi
 
@@ -64,7 +67,9 @@ if type antibody &>> /dev/null; then
     else
         # Spaceship doesn't work on CentOS 7, because zsh is too old. (5.0.x vs 5.2 minimum)
         # https://github.com/denysdovhan/spaceship-prompt/issues/638
-        cat "${dotfiles_dir}/antibody/bundles.txt" | /usr/bin/grep -v 'denysdovhan/spaceship-prompt' | antibody bundle  > ~/.zsh_plugins.sh
+        cat "${dotfiles_dir}/antibody/bundles.txt" | \
+            /usr/bin/grep -v 'denysdovhan/spaceship-prompt' | \
+            antibody bundle > ~/.zsh_plugins.sh
         # Powerline fonts mess up long lines on Linux
         export PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red}) ->%f "
     fi
