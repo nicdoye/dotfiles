@@ -2,7 +2,10 @@
 
 # macOS
 _nic_macos_os () {
-    system_profiler SPSoftwareDataType | grep -w Version | cut -f2 -d: | /usr/bin/awk '{print $1 " " $2}' | xargs
+    system_profiler SPSoftwareDataType | \
+        grep -w Version | \
+        cut -f2 -d: | \
+        /usr/bin/awk '{print $1 " " $2}' | xargs
 }
 
 _nic_macos_cpu_fans () {
@@ -54,7 +57,7 @@ if [[ -z "${_os}" ]] && [[ -r /etc/os-release ]]; then \
 fi 
 
 if [ -z "${_os}" ]; then
-    _os='Unknown'
+    _os="$(uname -s)"
 fi
 
 type uname &>> /dev/null && \
