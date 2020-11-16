@@ -24,25 +24,34 @@ _nic_lsb_os () {
     echo "${lsb_i} ${lsb_r}"
 }
 
-# Append if not x86_64
+# Append arch
 _nic_arch () {
     local os="$@"
     local arch="$(uname -m)"
-    [ "${arch}" != 'x86_64' ] && os="${os} ${arch}"
+    #[ "${arch}" != 'x86_64' ] && os="${os} ${arch}"
+    os="${os} ${arch}"
     echo "${os}"
 }
 
-type system_profiler &>> /dev/null && \
-    _os=$(_nic_macos_os)
+_nic_os_release_os () {
+    echo "$(/usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | cut -f2 -d= | tr -d '"')"
+}
 
-type lsb_release &>> /dev/null && \
+if type system_profiler &>> /dev/null &&; then \
+    _os=$(_nic_macos_os)
+fi
+
+if [[ -z "${_os}" ]] && [[ -r /etc/os-release ]]; then \
+    _os=$(_nic_os_release_os)
+fi 
+
+if [[ -z "${_os}" ]] && type lsb_release &>> /dev/null; then \
     _os=$(_nic_lsb_os)
+fi
 
 if [ -z "${_os}" ]; then
     # Still unset?
-    if [ -f /etc/os-release ]; then
-        _os="$(/usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | cut -f2 -d= | tr -d '"')"
-    fi
+    _os='Unknown'
 fi
 
 type uname &>> /dev/null && \
@@ -56,6 +65,8 @@ if type antibody &>> /dev/null; then
         # Spaceship doesn't work on CentOS 7, because zsh is too old. (5.0.x vs 5.2 minimum)
         # https://github.com/denysdovhan/spaceship-prompt/issues/638
         cat "${dotfiles_dir}/antibody/bundles.txt" | /usr/bin/grep -v 'denysdovhan/spaceship-prompt' | antibody bundle  > ~/.zsh_plugins.sh
+        # Powerline fonts mess up long lines on Linux
+        export PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red}) ->%f "
     fi
 fi
 
