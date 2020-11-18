@@ -44,24 +44,27 @@ _nic_os_release_os () {
                     -e 's/\s*$//')"
 }
 
-if type system_profiler &>> /dev/null &&; then \
+if type system_profiler &>> /dev/null; then
     _os=$(_nic_macos_os)
-fi
-
-if [[ -z "${_os}" ]] && type lsb_release &>> /dev/null; then \
+elif type lsb_release &>> /dev/null; then
     _os=$(_nic_lsb_os)
-fi
-
-if [[ -z "${_os}" ]] && [[ -r /etc/os-release ]]; then \
+elif [ -r /etc/os-release ]; then
     _os=$(_nic_os_release_os)
-fi 
-
-if [ -z "${_os}" ]; then
+elif type uname &>> /dev/null; then
     _os="$(uname -s)"
+else
+    _os='Unknown'
 fi
 
 type uname &>> /dev/null && \
     _os=$(_nic_arch "${_os}")
+
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/jira
+JIRA_URL='https://alfresco.atlassian.net'
+JIRA_NAME='ndoye'
+JIRA_PREFIX='MSP'
+JIRA_RAPID_BOARD='true'
+# JIRA_DEFAULT_ACTION - Action to do when jira is called with no arguments; defaults to "new"
 
 if type antibody &>> /dev/null; then
     source <(antibody init)
