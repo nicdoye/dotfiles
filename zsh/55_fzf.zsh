@@ -2,7 +2,7 @@
 
 # https://github.com/junegunn/fzf/wiki/Color-schemes#alternate-solarized-lightdark-theme
 
-_gen_fzf_default_opts() {
+_gen::fzf_default_opts() {
   local base03="234"
   local base02="235"
   local base01="240"
@@ -33,4 +33,4 @@ _gen_fzf_default_opts() {
   #  --color info:$yellow,prompt:$yellow,pointer:$base03,marker:$base03,spinner:$yellow
   #"
 }
-_gen_fzf_default_opts
+_gen::fzf_default_opts

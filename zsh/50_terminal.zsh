@@ -1,15 +1,17 @@
 #!/bin/zsh
 
+_read::ti_file () {
+# https://github.com/neovim/neovim/wiki/FAQ#my-ctrl-h-mapping-doesnt-work
+    local _ti_file="${HOME}/.${TERM}.ti"
+    [ -r "${_tic_file}" ] && tic "${_ti_file}"
+}
 # SHELL
 export EDITOR=nvim
 # This is idiotic - setting your editor to vim means it assumes you
 # want vim keybindings. Reset to emacs:
 bindkey -e
 export CLICOLOR=1
-# https://github.com/neovim/neovim/wiki/FAQ#my-ctrl-h-mapping-doesnt-work
-if test -f ~/.${TERM}.ti; then
-    tic ~/.${TERM}.ti
-fi
+_read::ti_file
 #
 export LSCOLORS=Gxfxcxdxbxegedabagacad
 export TERM=xterm-256color
@@ -29,14 +31,11 @@ unsetopt correctall
 setopt interactivecomments
 
 # ripgrep config
-export RIPGREP_CONFIG_PATH="${HOME}/.dotfiles/ripgrep/ripgreprc"
+export RIPGREP_CONFIG_PATH="${dotfiles_dir}/ripgrep/ripgreprc"
 
 # Bizarre zshism
-# alias history="history 1"
-# Equivalent/better as a function.
 function history () { 
-    if [ -z "$*" ]
-    then
+    if [ -z "$*" ]; then
         # Bash-style all history
         fc -l 1
     else

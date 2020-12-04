@@ -1,29 +1,9 @@
 #!/bin/zsh
 
-# vim: set filetype=sh :
+if type glances &>> /dev/null; then
+    alias   top=glances
+fi
 
-########################################################################
-# Remember one-liners containing || etc., need to be enclosed by {}
-########################################################################
-
-# Hack around vimpager being too clever. Use a pre-generated
-# vimpager config. 
-
-#__nic_pager () { vim -u ~/.dotfiles/vimpager/vimpager.vim $* ; }
-# alias __nic_pager=vim -u ~/.dotfiles/vimpager/vimpager.vim
-# export PAGER=__nic_pager
-
-#less        () __nic_pager $*
-#zless       () __nic_pager $*
-#bzless      () __nic_pager $*
-#lzless      () __nic_pager $*
-#xzless      () __nic_pager $*
-#more        () __nic_pager $*
-#zmore       () __nic_pager $*
-#bzmore      () __nic_pager $*
-#lzmore      () __nic_pager $*
-#xzmore      () __nic_pager $*
-top         () glances
 if type nvim &>> /dev/null; then
     alias       vim=nvim
 fi
@@ -140,7 +120,7 @@ ghc         () {
         cd "${github_project}"
 }
 
-_java_version   () { 
+get::java_version   () { 
     sdk current java | grep ^'[[:alnum:]]' | /usr/bin/awk '{print $4}' 
 }
 
@@ -156,7 +136,6 @@ setmyokta   () {
 find_cmd    () { whence -p $1 || echo false ; }
 
 pstree      () $(find_cmd pstree) -g2 -w $*
-#l           () $(find_cmd m) lock
 
 print_sep   ()
 {
@@ -195,14 +174,9 @@ __nic_grep       ()
 {
     local grep_type=$1
     local str=$2
-    local true_values=( true yes on 1 )
-    local prefer_gnu=true
-    local prefer_ripgrep=true
-    local prefix=''
 
     # ripgrep overrides ggrep and grep
-    if [[ ${true_values[(i)${prefer_ripgrep}]} -le ${#true_values} ]]
-    then
+    if type rg &>> /dev/null; then
         if [[ ${grep_type} == '-H' ]]
         then
             rg -N -p --no-heading ${str}
@@ -211,21 +185,13 @@ __nic_grep       ()
             rg -l ${str}
         fi
         return $?
-    elif [[ ${true_values[(i)${prefer_gnu}]} -le ${#true_values} ]]
-    then
-        # prefix=${prefer_gnu+g}
-        prefix=g
     fi
 
-    ${prefix}find . -type f -not -path '*/.git/*' -exec ${prefix}grep ${grep_type} ${str} {} \;
+    find . -type f -not -path '*/.git/*' -exec grep ${grep_type} ${str} {} \;
 }
 
 lgrep       () __nic_grep -l $*
 Hgrep       () __nic_grep -H $*
-
-# git-all     () { git commit -a -m "$*" && git push }
-# git-ndoye   () { git-all "$*" ; ssh -At pinf07 'sudo su -lc "puppet-code deploy ndoye --wait"' }
-# git-remind  () { git branch && git status }
 
 #tiff2png    () {
     #local ifile=$1
@@ -270,12 +236,12 @@ centos-fixed    () _di_all 'centos@sha256:bc494daa9d9ad7e37f93236fbd2c3f37273999
 #ggrep       () fedora grep $*
 
 # fedora/docker is faster than native which is faster than alpine/docker
-sha1sum     () alpine-fixed ${(%):-%N} $*
-sha256sum   () alpine-fixed ${(%):-%N} $* 
-sha512sum   () alpine-fixed ${(%):-%N} $* 
-# Not in alpine
-sha224sum   () centos-fixed ${(%):-%N} $*
-sha384sum   () centos-fixed ${(%):-%N} $* 
+# sha1sum     () alpine-fixed ${(%):-%N} $*
+# sha256sum   () alpine-fixed ${(%):-%N} $* 
+# sha512sum   () alpine-fixed ${(%):-%N} $* 
+# # Not in alpine
+# sha224sum   () centos-fixed ${(%):-%N} $*
+# sha384sum   () centos-fixed ${(%):-%N} $* 
 # Brew/coreutils is faster than fedora/docker which is faster than alpine/docker
 #md5sum      () fedora ${(%):-%N} $*
 
