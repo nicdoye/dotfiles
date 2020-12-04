@@ -21,7 +21,7 @@
     }
 
     local secret_zshrc="${HOME}/.secrets/secrets.zsh"
-    for file in "${secret_zshrc}" ${dotfiles_dir}/zsh/[0-9][0-9]_*.zsh
+    for file in "${secret_zshrc}" ${dotfiles_dir}/zsh/<00-99>_*.zsh
     do
         includer ${file}
     done
