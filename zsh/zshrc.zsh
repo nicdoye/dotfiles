@@ -10,6 +10,7 @@
     local _bsd_ph=/usr/libexec/path_helper
     [ -x ${_bsd_ph} ] && eval $(${_bsd_ph} -s)
 
-    source ${HOME}/.secrets/secrets.zsh ${HOME}/.dotfiles/zsh/<00-99>_*.zsh
+    dotfiles_dir=${HOME}/.dotfiles
+    source ${HOME}/.secrets/secrets.zsh ${dotfile_dir}/zsh/<00-99>_*.zsh
 }
 
