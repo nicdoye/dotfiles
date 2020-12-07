@@ -125,7 +125,7 @@ get::java_version   () {
 }
 
 setmyokta   () {
-    sdk use java 8u152-zulu
+    sdk use java '8.0.252.hs-adpt'
     cd "${HOME}/.aws"
     setmyokta.sh $*
     cd "${OLDPWD}"
@@ -137,19 +137,13 @@ find_cmd    () { whence -p $1 || echo false ; }
 
 pstree      () $(find_cmd pstree) -g2 -w $*
 
-print_sep   ()
-{
+print_sep   () {
     printf -- "---- $*\t------------------------------------------------------\n"
 }
 
-print_36spacex ()
-{
-    for i in $(seq 0 35); do echo -n "$1 "; done ; echo
-}
-
-print_72x   ()
-{
-    for i in $(seq 0 71); do echo -n $1; done ; echo
+print::n    () {
+    for i in {1..$1}; echo -n "$2"
+    echo
 }
 
 bi          () brew info 	$* 
@@ -342,7 +336,7 @@ alias       traa=rtaa
 sac         () { ssh -A centos@$1 ; }
 
 paas-local  () {
-    cd ~/vcs/github.com/Alfresco/paas-control-plane/utils
+    cd ${HOME}/vcs/github.com/Alfresco/paas-control-plane/utils
     ./paas-local.sh $1
 }
 
@@ -353,7 +347,7 @@ _build      () {
     local _old_dir="${PWD}"
     local caller=$funcstack[2]
 
-    cd ~/vcs/github.com/Alfresco/paas-base-ami/src/main/scripts
+    cd ${HOME}/vcs/github.com/Alfresco/paas-base-ami/src/main/scripts
     ./${caller}.sh
     cd "${_old_dir}"
 }

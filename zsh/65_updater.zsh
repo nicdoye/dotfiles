@@ -9,50 +9,50 @@
 # There's no reason for these not to be in global scope
 brew_u      () 
 { 
-    print_36spacex 🍺
+    print::n 27 '🍺 '
     brew upgrade 
 }
 
 topgrade_u  ()
 {
-    print_36spacex 🎩
+    print::n 27 '🎩 '
     topgrade 
 }
 
 gcloud_u    ()
 {
-    print_36spacex '🌥 '
+    print::n 27 '🌥 '
     gcloud components update --quiet
 }
 
 mas_u       ()
 {
-    print_36spacex 🍎
+    print::n 27 '🍎 '
     mas upgrade
 }
 
 antibody_u  ()
 {
-    print_36spacex 💉
+    print::n 27 '💉 '
     antibody update
 }
 
 npm_u       ()
 {
-    print_36spacex 🔥
+    print::n 27 '🔥 '
     npm i -g npm
     npm up -g firebase-tools aws-sam-local @aws-amplify/cli
 }
 
 rust_u      ()
 {
-    print_36spacex ®
+    print::n 27 '® '
     rustup update
 }
 
 sdk_u       ()
 {
-    print_36spacex 🌟
+    print::n 27 '🌟 '
     sdk selfupdate force
     [[ -s "/Users/ndoye/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/ndoye/.sdkman/bin/sdkman-init.sh"
     # There is a chance sdkman could update again between these two commands.
@@ -62,13 +62,13 @@ sdk_u       ()
 
 gofish_u    ()
 {
-    print_36spacex 🐠
+    print::n 27 '🐠 '
     gofish upgrade
 }
 
 brew_cask_u ()
 {
-    print_36spacex 🛢️
+    print::n 27 '🛢️ '
     brew outdated --cask
     for cask in $(brew outdated --cask | /usr/bin/awk '{ print $1 }' |  grep -v chef | xargs)
     do
@@ -85,7 +85,7 @@ bum         ()
 { 
     local all_p=$1
 
-    print_36spacex 🏁
+    print::n 27 '🏁 '
     echo
 
     # Dead?
@@ -108,5 +108,5 @@ bum         ()
     [[ '-a' == "$all_p" ]] && optional_u
     
     echo
-    print_36spacex 🛑
+    print::n 27 '🛑 '
 }
