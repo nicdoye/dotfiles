@@ -88,23 +88,10 @@ bum         ()
     print::n 27 '🏁 '
     echo
 
-    # Dead?
-    # gofish_u
-    # In topgrade
-    # brew_u
-    # In topgrade
-    # mas_u
-    # In topgrade
-    # npm_u
-
     topgrade_u
     antibody_u
     gcloud_u
 
-    # In topgrade
-    # rust_u
-
-    # sdk_u
     [[ '-a' == "$all_p" ]] && optional_u
     
     echo
