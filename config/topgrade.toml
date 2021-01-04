@@ -1,0 +1,19 @@
+disable = [ 
+    "vim",
+    "gem",
+    "node",
+    "go",
+    "opam",
+    "gcloud",
+    "dotnet"
+]
+
+assume_yes = true
+
+no_retry = true
+
+cleanup = true
+
+[git]
+repos = []
+
