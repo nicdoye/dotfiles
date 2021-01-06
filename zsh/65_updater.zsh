@@ -89,8 +89,6 @@ bum         ()
     echo
 
     topgrade_u
-    antibody_u
-    gcloud_u
 
     [[ '-a' == "$all_p" ]] && optional_u
     
