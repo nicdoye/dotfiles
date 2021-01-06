@@ -81,7 +81,7 @@ optional_u ()
     brew_cask_u
 }
 
-bum         () 
+bum_old    () 
 { 
     local all_p=$1
 
@@ -95,3 +95,6 @@ bum         ()
     echo
     print::n 27 '🛑 '
 }
+
+# 2021.01.06 My old updater is deprecated - just use topgrade now
+alias bum=topgrade
