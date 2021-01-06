@@ -6,7 +6,12 @@
 # Remember one-liners containing || etc., need to be enclosed by {}
 ########################################################################
 
-# There's no reason for these not to be in global scope
+# 2021.01.06 My old updater is deprecated - just use topgrade now
+alias bum=topgrade
+
+# Basically turn following into a block comment.
+if [ ]; then
+
 brew_u      () 
 { 
     print::n 27 '🍺 '
@@ -96,5 +101,5 @@ bum_old    ()
     print::n 27 '🛑 '
 }
 
-# 2021.01.06 My old updater is deprecated - just use topgrade now
-alias bum=topgrade
+fi
+
