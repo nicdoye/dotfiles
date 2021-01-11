@@ -68,9 +68,11 @@ JIRA_RAPID_BOARD='true'
 
 if type antibody &>> /dev/null; then
     source <(antibody init)
-    if [ $(echo $ZSH_VERSION | cut -f1 -d.) -ge 5 ] && [ $(echo $ZSH_VERSION | cut -f2 -d.) -ge 2 ]; then 
-        antibody bundle < "${dotfiles_dir}/antibody/bundles.txt" > ~/.zsh_plugins.sh
-    else
+
+    # Spaceship doesn't work on CentOS 7, because zsh is too old. (5.0.x vs 5.2 minimum)
+    if [ $(echo $ZSH_VERSION | cut -f1 -d.) -lt 5 ] || \
+        [ $(echo $ZSH_VERSION | cut -f1 -d.) -eq 5 ] &&
+        [ $(echo $ZSH_VERSION | cut -f2 -d.) -lt 2 ]; then
         # Spaceship doesn't work on CentOS 7, because zsh is too old. (5.0.x vs 5.2 minimum)
         # https://github.com/denysdovhan/spaceship-prompt/issues/638
         cat "${dotfiles_dir}/antibody/bundles.txt" | \
@@ -78,6 +80,8 @@ if type antibody &>> /dev/null; then
             antibody bundle > ~/.zsh_plugins.sh
         # Powerline fonts mess up long lines on Linux
         export PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red}) ->%f "
+    else
+        antibody bundle < "${dotfiles_dir}/antibody/bundles.txt" > ~/.zsh_plugins.sh
     fi
 fi
 
@@ -137,11 +141,4 @@ SPACESHIP_PROMPT_ORDER=(
   exit_code     # Exit code section
   char          # Prompt character
 )
-
-# Removed all prefices so hacked this into CHAR SYMBOL. #naughty
-#[ -v _os ] && \
-    #SPACESHIP_CHAR_PREFIX="%{%b%}%{%B%F{215}%}$_os%{%b%f%}%{%B%} "
-
-# Pure
-#PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
 
