@@ -75,9 +75,9 @@ if type antibody &>> /dev/null; then
         [ $(echo $ZSH_VERSION | cut -f2 -d.) -lt 2 ]; then
         # Spaceship doesn't work on CentOS 7, because zsh is too old. (5.0.x vs 5.2 minimum)
         # https://github.com/denysdovhan/spaceship-prompt/issues/638
-        cat "${dotfiles_dir}/antibody/bundles.txt" | \
-            /usr/bin/grep -v 'denysdovhan/spaceship-prompt' | \
-            antibody bundle > ~/.zsh_plugins.sh
+        #cat "${dotfiles_dir}/antibody/bundles.txt" | \
+        #    /usr/bin/grep -v 'denysdovhan/spaceship-prompt' | \
+        #    antibody bundle > ~/.zsh_plugins.sh
         # Powerline fonts mess up long lines on Linux
         export PS1="%}%(12V.%F{242}%12v%f .)%F{green}${_os}%(?.%F{magenta}.%F{red}) ->%f "
     else
