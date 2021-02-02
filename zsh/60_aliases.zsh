@@ -8,17 +8,19 @@ if type nvim &>> /dev/null; then
     alias       vim=nvim
 fi
 # Aliases allow for command line completion, unlike functions
-alias       a=aws
-alias       b=brew
-alias       c=curl
-alias       d=docker
-alias       g=git
-alias       h=helm
-alias       i=istioctl
+# alias       a=aws
+# alias       b=brew
+# alias       c=curl
+# alias       d=docker
+# alias       g=git
+# alias       h=helm
+# alias       i=istioctl
 alias       k=kubectl
 
+declare alf_repo="${HOME}/vcs/github.com/Alfresco"
+
 alias       github="cd ${HOME}/vcs/github.com"
-alias       alf="cd ${HOME}/vcs/github.com/Alfresco"
+alias       alf="cd ${alf_repo}"
 alias       psa='pkill ssh-agent'
 alias       setmyokta.sh='setmyokta-nic.sh'
 
@@ -336,7 +338,7 @@ alias       traa=rtaa
 sac         () { ssh -A centos@$1 ; }
 
 paas-local  () {
-    cd ${HOME}/vcs/github.com/Alfresco/paas-control-plane/utils
+    cd ${alf_repo}/paas-control-plane/utils
     ./paas-local.sh $1
 }
 
@@ -347,7 +349,7 @@ _build      () {
     local _old_dir="${PWD}"
     local caller=$funcstack[2]
 
-    cd ${HOME}/vcs/github.com/Alfresco/paas-base-ami/src/main/scripts
+    cd ${alf_repo}/paas-base-ami/src/main/scripts
     ./${caller}.sh
     cd "${_old_dir}"
 }
@@ -357,6 +359,14 @@ build-json2ldap () { _build ; }
 build-reposmall () { _build ; }
 build-search () { _build ; }
 build-transform-service () { _build ; }
+
+alias paas-base-ami="cd ${alf_repo}/paas-base-ami"
+alias paas-control-plane="cd ${alf_repo}/paas-control-plane"
+alias paas-docker-build-images="cd ${alf_repo}/paas-docker-build-images"
+alias paas-terraform-modules="cd ${alf_repo}/paas-terraform-modules"
+
+alias pcp=paas-control-plane
+alias ptm=paas-terraform-modules
 
 aws-migrate-repo    () {
     local oldrepo=$(git remote -v | head -1 | awk '{print $2}')
