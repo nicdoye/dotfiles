@@ -17,7 +17,7 @@ fi
 # alias       i=istioctl
 alias       k=kubectl
 
-declare alf_repo="${HOME}/vcs/github.com/Alfresco"
+typeset -g  alf_repo="${HOME}/vcs/github.com/Alfresco"
 
 alias       github="cd ${HOME}/vcs/github.com"
 alias       alf="cd ${alf_repo}"
