@@ -1,23 +1,23 @@
 #!/bin/zsh
 
 # macOS
-_nic_macos_os () {
+_nic::macos::os () {
     system_profiler SPSoftwareDataType | \
         grep -w Version | \
         cut -f2 -d: | \
         /usr/bin/awk '{print $1 " " $2}' | xargs
 }
 
-_nic_macos_cpu_fans () {
+_nic::macos::cpu::fans () {
     echo $(osx-cpu-temp -f | tail -2 | awk '{print $7}' | xargs) + 2 / pq | dc
 }
 
-_nic_macos_cpu_temp () {
+_nic::macos::cpu::temp () {
     osx-cpu-temp
 }
 
 # Linux
-_nic_lsb_os () {
+_nic::lsb::os () {
     echo "$(lsb_release -ds | \
             tr -d '"' | \
             sed -e 's/release//' \
@@ -27,7 +27,7 @@ _nic_lsb_os () {
 }
 
 # Append arch
-_nic_arch () {
+_nic::arch () {
     local os="$@"
     local arch="$(uname -m)"
     #[ "${arch}" != 'x86_64' ] && os="${os} ${arch}"
@@ -35,21 +35,30 @@ _nic_arch () {
     echo "${os}"
 }
 
-_nic_os_release_os () {
-    echo "$(/usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | \
-                cut -f2 -d= | \
-                tr -d '"' | \
-                sed -e 's/([^)]*)//' \
-                    -e 's/\s\+/ /g' \
-                    -e 's/\s*$//')"
+_nic::redhat::relase::os () {
+    cut -f 1 -d'(' < /etc/centos-release | \
+        cut -f-2 -d. | \
+        sed -e 's_release __' \
+            -e 's_ $__g'
+}
+
+_nic::os::release::os () {
+    /usr/bin/grep ^'PRETTY_NAME=' /etc/os-release | \
+        cut -f2 -d= | \
+        tr -d '"' | \
+        sed -e 's/([^)]*)//' \
+            -e 's/\s\+/ /g' \
+            -e 's/\s*$//'
 }
 
 if type system_profiler &>> /dev/null; then
-    _os=$(_nic_macos_os)
+    _os=$(_nic::macos::os)
+elif [ -r /etc/redhat-release ]; then
+    _os=$(_nic::redhat::relase::os)
 elif type lsb_release &>> /dev/null; then
-    _os=$(_nic_lsb_os)
+    _os=$(_nic::lsb::os)
 elif [ -r /etc/os-release ]; then
-    _os=$(_nic_os_release_os)
+    _os=$(_nic::os::release::os)
 elif type uname &>> /dev/null; then
     _os="$(uname -s)"
 else
@@ -57,7 +66,7 @@ else
 fi
 
 type uname &>> /dev/null && \
-    _os=$(_nic_arch "${_os}")
+    _os=$(_nic::arch "${_os}")
 
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/jira
 JIRA_URL='https://alfresco.atlassian.net'

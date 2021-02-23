@@ -166,7 +166,7 @@ flac2alac	() {
 
 # https://gist.github.com/nicdoye/62a2000972ee347123f079b70e994bc2
 
-__nic_grep       () 
+__nic::grep       () 
 {
     local grep_type=$1
     local str=$2
@@ -186,8 +186,8 @@ __nic_grep       ()
     find . -type f -not -path '*/.git/*' -exec grep ${grep_type} ${str} {} \;
 }
 
-lgrep       () __nic_grep -l $*
-Hgrep       () __nic_grep -H $*
+lgrep       () __nic::grep -l $*
+Hgrep       () __nic::grep -H $*
 
 #tiff2png    () {
     #local ifile=$1
