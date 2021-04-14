@@ -2,7 +2,7 @@ disable = [
     "vim",
     "gem",
     "node",
-    "go",
+#    "go",
     "opam",
     "gcloud",
     "dotnet"

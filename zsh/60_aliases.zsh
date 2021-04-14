@@ -325,14 +325,10 @@ alias       gdh="git diff head"
 alias       gdd="git diff develop"
 alias       gmd="git merge develop"
 
-alias       taa="terragrunt apply-all"
-alias       tda="terragrunt destroy-all"
+alias       taa="terragrunt run-all apply"
+alias       tda="terragrunt run-all destroy"
 alias       tdai="tda --terragrunt-ignore-dependency-errors"
-
-rtaa        () { 
-    rm -rf */.terragrunt-cache/ .terragrunt-cache/ 
-    terragrunt apply-all $*
-}
+alias       rtaa="taa --terragrunt-source-update"
 alias       traa=rtaa
 
 sac         () { ssh -A centos@$1 ; }
