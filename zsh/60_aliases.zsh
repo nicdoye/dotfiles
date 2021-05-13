@@ -316,6 +316,31 @@ gc          () {
     disable_cis
 }
 
+# git merge upstream
+gmu         () {
+    local upstream="$1"
+    if [ -z "$upstream" ]; then
+        echo 'upstream branch not set' > /dev/stderr
+        exit
+    fi
+
+    # Requires git 2.22.0+ which we don't have on CentOS
+    # git branch --show-current
+    local current_branch="$(git rev-parse --abbrev-ref HEAD)"
+    if [ -z "$current_branch" ]; then
+        echo 'current_branch not set' > /dev/stderr
+        exit
+    fi
+
+    git checkout "${upstream}" || exit
+    git pull || exit
+    git checkout ${current_branch} || exit
+    git merge "${upstream}"
+}
+
+alias       gmd="gmu develop"
+alias       gm7="gmu acs-v7"
+
 gdp         () { git checkout develop && git pull; }
 gpu         () { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; }
 alias       gcb="git checkout -b"
@@ -323,7 +348,6 @@ alias       gp="git pull"
 alias       gs="git status"
 alias       gdh="git diff head"
 alias       gdd="git diff develop"
-alias       gmd="git merge develop"
 
 alias       taa="terragrunt run-all apply"
 alias       tda="terragrunt run-all destroy"

@@ -3,9 +3,12 @@ disable = [
     "gem",
     "node",
 #    "go",
+    "node",
     "opam",
     "gcloud",
     "dotnet"
+#    "vscode",
+#    "vscodium"
 ]
 
 assume_yes = true
