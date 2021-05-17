@@ -341,7 +341,20 @@ gmu         () {
 alias       gmd="gmu develop"
 alias       gm7="gmu acs-v7"
 
-gdp         () { git checkout develop && git pull; }
+# git checkout and pull
+gcp         () {
+    local upstream="$1"
+    if [ -z "$upstream" ]; then
+        echo 'upstream branch not set' > /dev/stderr
+        exit
+    fi
+
+    git checkout "${upstream}" || exit
+    git pull || exit
+}
+
+alias       gdp="gcp develop"
+alias       g7p="gcp acs-v7"
 gpu         () { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; }
 alias       gcb="git checkout -b"
 alias       gp="git pull"
