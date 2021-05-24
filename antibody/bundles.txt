@@ -1,13 +1,12 @@
 # this block is in alphabetic order
-ohmyzsh/ohmyzsh
-robbyrussell/oh-my-zsh path:plugins/jira
+# ohmyzsh/ohmyzsh
+# robbyrussell/oh-my-zsh path:plugins/jira
 
 # Needed by Pure
 mafredri/zsh-async
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 zsh-users/zsh-history-substring-search
-
 
 # Based on https://raw.githubusercontent.com/caarlos0/dotfiles/master/antibody/bundles.txt
 # these should be at last!

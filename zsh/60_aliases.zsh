@@ -362,6 +362,8 @@ alias       gs="git status"
 alias       gdh="git diff head"
 alias       gdd="git diff develop"
 
+alias       git-bump-amis="git checkout -b feature/bump-amis-$(date -u +"%Y%m%dt%H%M%S0000")"            
+
 alias       taa="terragrunt run-all apply"
 alias       tda="terragrunt run-all destroy"
 alias       tdai="tda --terragrunt-ignore-dependency-errors"
