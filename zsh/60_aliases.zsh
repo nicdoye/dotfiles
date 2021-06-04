@@ -380,7 +380,7 @@ gcp         () {
 
 alias       gdp="gcp develop"
 alias       g7p="gcp acs-v7"
-gpu         () { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; }
+gpu         () { enable_cis; git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; disable_cis; }
 alias       gcb="git checkout -b"
 alias       gp="git pull"
 alias       gs="git status"
