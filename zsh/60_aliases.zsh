@@ -288,21 +288,46 @@ createSecret() {
     aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-85e9-55c96f5f80c3 --secret-string "${2}" --region us-east-1
 }
 
-disable_cis () {
-    local top_level="$(git rev-parse --show-toplevel)"
-    local repo=$(basename ${top_level})
+switch::cis () {
+    # mode is either enable or disable
+    local mode=$1
+    local top_level repo old_bool new_bool
+
+    if ! git status &>> /dev/null; then 
+        echo 'Not in a git repo' > /dev/stderr
+        return 1 
+    fi
+
+    case "$mode" in
+        'enable')
+            old_bool='false'
+            new_bool='true'
+            ;;
+        'disable')
+            old_bool='true'
+            new_bool='false'
+            ;;
+        *)
+            echo "Invalid first argumenet '$mode' passed. Should be one of 'enable' or 'disable'" > /dev/stderr
+            return 1
+            ;;
+    esac
+
+    top_level="$(git rev-parse --show-toplevel)"
+    repo="$(basename ${top_level})"
+
     if [ "${repo}" = 'paas-base-ami' ]; then
-        sed -i '' 's/cis_enabled: true/cis_enabled: false/' "${top_level}/playbooks/environments/acs/acs-all.yaml"
+        local config_file="${top_level}/playbooks/environments/acs/acs-all.yaml"
+        if [[ "$OSTYPE" == "linux-gnu" ]]; then
+            sed -i -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
+        elif [[ "$OSTYPE" == "darwin"* ]]; then 
+            sed -i '' -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
+        fi
     fi
 }
 
-enable_cis () {
-    local top_level="$(git rev-parse --show-toplevel)"
-    local repo=$(basename ${top_level})
-    if [ "${repo}" = 'paas-base-ami' ]; then
-        sed -i '' 's/cis_enabled: false/cis_enabled: true/' "${top_level}/playbooks/environments/acs/acs-all.yaml"
-    fi
-}
+alias   disable_cis="switch::cis disable"
+alias   enable_cis="switch::cis enable"
 
 ga          () {
     enable_cis
@@ -413,4 +438,9 @@ aws-migrate-repo    () {
     git remote add origin $newrepo
     git fetch
     git branch --set-upstream-to=origin/develop develop
+}
+
+reset-lastpass  () {
+    pkill -9 LastPass
+    pkill -9 LastPassSafari
 }
