@@ -7,14 +7,8 @@ fi
 if type nvim &>> /dev/null; then
     alias       vim=nvim
 fi
+
 # Aliases allow for command line completion, unlike functions
-# alias       a=aws
-# alias       b=brew
-# alias       c=curl
-# alias       d=docker
-# alias       g=git
-# alias       h=helm
-# alias       i=istioctl
 alias       k=kubectl
 
 typeset -g  alf_repo="${HOME}/vcs/github.com/Alfresco"
@@ -52,13 +46,6 @@ _aws_profile () {
     aws sts get-caller-identity --output text --profile "${profile}" &>> /dev/null
     [ $? != 0 ] && echo "Now run: o ${profile}"
 }
-
-# _ibm_kube_config 'lon04' 'nic-ibm-cluster-004'
-#_ibm_kube_config () {
-#    local datacentre="$1"
-#    local cluster="$2"
-#    _kube_config "${HOME}/.bluemix/plugins/container-service/clusters/${cluster}/kube-config-${datacentre}-${cluster}.yml" 1.10.4 2.9.1
-#}
 
 kc () {
     case "$1" in
@@ -122,8 +109,8 @@ ghc         () {
         cd "${github_project}"
 }
 
-get::java_version   () { 
-    sdk current java | grep ^'[[:alnum:]]' | /usr/bin/awk '{print $4}' 
+get::java_version   () {
+    sdk current java | grep ^'[[:alnum:]]' | /usr/bin/awk '{print $4}'
 }
 
 setmyokta   () {
@@ -148,14 +135,13 @@ print::n    () {
     echo
 }
 
-bi          () brew info 	$* 
-bin         () brew install $* 
+bi          () brew info 	$*
+bin         () brew install $*
 bh          () brew home 	$*
 
 lx          () exa  --long --group-directories-first --group --git $*
-#ls          () exa  --long --group-directories-first --group --git $*
 
-youtube-flac () youtube-dl -x --audio-format flac --audio-quality 9 $* 
+youtube-flac () youtube-dl -x --audio-format flac --audio-quality 9 $*
 
 flac2alac	() {
 	for file in $*
@@ -166,7 +152,7 @@ flac2alac	() {
 
 # https://gist.github.com/nicdoye/62a2000972ee347123f079b70e994bc2
 
-__nic::grep       () 
+__nic::grep       ()
 {
     local grep_type=$1
     local str=$2
@@ -176,7 +162,7 @@ __nic::grep       ()
         if [[ ${grep_type} == '-H' ]]
         then
             rg -N -p --no-heading ${str}
-        else 
+        else
             # Assume -l.
             rg -l ${str}
         fi
@@ -200,7 +186,7 @@ Hgrep       () __nic::grep -H $*
 di          () docker run --rm -it $*
 # Run commands in CentOS docker
 # ssh bit doesn't work as there's no client
-_di_all     () 
+_di_all     ()
 {
     local image=$1
     shift 1
@@ -218,8 +204,8 @@ _di_all     ()
 
 centos          () _di_all ${(%):-%N} $*
 fedora          () _di_all ${(%):-%N} $*
-ubuntu          () _di_all ${(%):-%N} $* 
-debian          () _di_all ${(%):-%N} $* 
+ubuntu          () _di_all ${(%):-%N} $*
+debian          () _di_all ${(%):-%N} $*
 alpine          () _di_all ${(%):-%N} $*
 # Particular alpine (3.7/latest on 2018.04.09)
 alpine-fixed    () _di_all 'alpine@sha256:7b848083f93822dd21b0a2f14a110bd99f6efb4b838d499df6d04a49d0debf8b' $*
@@ -233,11 +219,11 @@ centos-fixed    () _di_all 'centos@sha256:bc494daa9d9ad7e37f93236fbd2c3f37273999
 
 # fedora/docker is faster than native which is faster than alpine/docker
 # sha1sum     () alpine-fixed ${(%):-%N} $*
-# sha256sum   () alpine-fixed ${(%):-%N} $* 
-# sha512sum   () alpine-fixed ${(%):-%N} $* 
+# sha256sum   () alpine-fixed ${(%):-%N} $*
+# sha512sum   () alpine-fixed ${(%):-%N} $*
 # # Not in alpine
 # sha224sum   () centos-fixed ${(%):-%N} $*
-# sha384sum   () centos-fixed ${(%):-%N} $* 
+# sha384sum   () centos-fixed ${(%):-%N} $*
 # Brew/coreutils is faster than fedora/docker which is faster than alpine/docker
 #md5sum      () fedora ${(%):-%N} $*
 
@@ -263,7 +249,7 @@ vdir        () ${(%):-g%N} $*
 # Supplied by brew (homebrew/dupes) grep
 # Nothing to do for ggrep
 # Supplied by brew gnu-tar
-# Nothing to do for gtar 
+# Nothing to do for gtar
 
 # packer-latest       () {
 #     local packer_root='/opt/'
@@ -293,9 +279,9 @@ switch::cis () {
     local mode=$1
     local top_level repo old_bool new_bool
 
-    if ! git status &>> /dev/null; then 
+    if ! git status &>> /dev/null; then
         echo 'Not in a git repo' > /dev/stderr
-        return 1 
+        return 1
     fi
 
     case "$mode" in
@@ -320,7 +306,7 @@ switch::cis () {
         local config_file="${top_level}/playbooks/environments/acs/acs-all.yaml"
         if [[ "$OSTYPE" == "linux-gnu" ]]; then
             sed -i -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
-        elif [[ "$OSTYPE" == "darwin"* ]]; then 
+        elif [[ "$OSTYPE" == "darwin"* ]]; then
             sed -i '' -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
         fi
     fi
@@ -346,7 +332,7 @@ gmu         () {
     local upstream="$1"
     if [ -z "$upstream" ]; then
         echo 'upstream branch not set' > /dev/stderr
-        exit
+        return
     fi
 
     # Requires git 2.22.0+ which we don't have on CentOS
@@ -354,12 +340,12 @@ gmu         () {
     local current_branch="$(git rev-parse --abbrev-ref HEAD)"
     if [ -z "$current_branch" ]; then
         echo 'current_branch not set' > /dev/stderr
-        exit
+        return
     fi
 
-    git checkout "${upstream}" || exit
-    git pull || exit
-    git checkout ${current_branch} || exit
+    git checkout "${upstream}" || return
+    git pull || return
+    git checkout ${current_branch} || return
     git merge "${upstream}"
 }
 
@@ -371,11 +357,11 @@ gcp         () {
     local upstream="$1"
     if [ -z "$upstream" ]; then
         echo 'upstream branch not set' > /dev/stderr
-        exit
+        return
     fi
 
-    git checkout "${upstream}" || exit
-    git pull || exit
+    git checkout "${upstream}" || return
+    git pull || return
 }
 
 alias       gdp="gcp develop"
@@ -387,7 +373,7 @@ alias       gs="git status"
 alias       gdh="git diff head"
 alias       gdd="git diff develop"
 
-alias       git-bump-amis="git checkout -b feature/bump-amis-$(date -u +"%Y%m%dt%H%M%S0000")"            
+alias       git-bump-amis="git checkout -b feature/bump-amis-$(date -u +"%Y%m%dt%H%M%S0000")"
 
 alias       taa="terragrunt run-all apply"
 alias       tda="terragrunt run-all destroy"

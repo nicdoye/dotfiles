@@ -36,7 +36,8 @@ _nic::arch () {
 }
 
 _nic::redhat::relase::os () {
-    cut -f 1 -d'(' < /etc/centos-release | \
+    local release_file="$1"
+    cut -f 1 -d'(' < "$release_file" | \
         cut -f-2 -d. | \
         sed -e 's_release __' \
             -e 's_ $__g'
@@ -54,7 +55,13 @@ _nic::os::release::os () {
 if type system_profiler &>> /dev/null; then
     _os=$(_nic::macos::os)
 elif [ -r /etc/redhat-release ]; then
-    _os=$(_nic::redhat::relase::os)
+    _os=$(_nic::redhat::relase::os /etc/redhat-release)
+elif [ -r /etc/centos-release ]; then
+    _os=$(_nic::redhat::relase::os /etc/centos-release)
+elif [ -r /etc/rocky-release ]; then
+    _os=$(_nic::redhat::relase::os /etc/rocky-release)
+elif [ -r /etc/fedora-release ]; then
+    _os=$(_nic::redhat::relase::os /etc/fedora-release)
 elif type lsb_release &>> /dev/null; then
     _os=$(_nic::lsb::os)
 elif [ -r /etc/os-release ]; then
@@ -150,4 +157,3 @@ SPACESHIP_PROMPT_ORDER=(
   exit_code     # Exit code section
   char          # Prompt character
 )
-
