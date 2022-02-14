@@ -6,9 +6,10 @@ disable = [
     "node",
     "opam",
     "gcloud",
-    "dotnet"
+    "dotnet",
 #    "vscode",
-#    "vscodium"
+#    "vscodium",
+    "gnome_shell_extensions"
 ]
 
 assume_yes = true
