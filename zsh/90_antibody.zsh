@@ -101,6 +101,18 @@ if type antibody &>> /dev/null; then
     fi
 fi
 
+# https://github.com/spaceship-prompt/spaceship-prompt/issues/726#issuecomment-534231326
+# https://github.com/ohmyzsh/ohmyzsh/issues/5157
+# and actually, read the ZSH FAQ ...
+# https://github.com/ohmyzsh/ohmyzsh/wiki/FAQ#i-see-duplicate-typed-characters-after-i-complete-a-command
+if [ "${os_name}" = 'linux' ]; then
+    if locale -a | grep -q en_GB.utf8; then
+        export LANG=en_GB.UTF-8
+    else
+        export LANG=C.UTF-8
+    fi
+fi
+
 # Move to a function and get working
 #[ -f /usr/local/share/kube-ps1.sh ] && source /usr/local/share/kube-ps1.sh
 #KUBE_PS1_SYMBOL_USE_IMG=true
@@ -145,10 +157,10 @@ SPACESHIP_PROMPT_ORDER=(
   venv          # virtualenv section
   # conda         # conda virtualenv section
   pyenv         # Pyenv section
-  dotnet        # .NET section
+  # dotnet        # .NET section
   # ember       # Ember.js section (Disabled)
   # kubecontext   # Kubectl context section
-  terraform     # Terraform workspace section
+  # terraform     # Terraform workspace section
   exec_time     # Execution time
   line_sep      # Line break
   battery       # Battery level and status
