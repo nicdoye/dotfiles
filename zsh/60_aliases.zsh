@@ -389,35 +389,45 @@ alias       traa=rtaa
 sac         () { ssh -A centos@$1 ; }
 
 paas-local  () {
+    local _old_dir="${PWD}"
     cd ${alf_repo}/paas-control-plane/utils
     ./paas-local.sh $1
+    cd "${_old_dir}"
 }
 
 alias       pls="paas-local start"
 alias       plc="paas-local connect"
+alias       plx="paas-local stop"
 
-_build      () {
-    local _old_dir="${PWD}"
-    local caller=$funcstack[2]
+for _file in ${alf_repo}/paas-base-ami/src/main/scripts/build-*.sh; do
+    local short_name=$(basename -s .sh "$_file")
+    local script_name=$(basename "$_file")
 
-    cd ${alf_repo}/paas-base-ami/src/main/scripts
-    ./${caller}.sh
-    cd "${_old_dir}"
+    "$short_name" () {
+        local _old_dir="${PWD}"
+
+        cd ${alf_repo}/paas-base-ami/src/main/scripts
+        "./${funcstack[1]}.sh"
+        cd "${_old_dir}"
+    }
+done
+unset _file
+
+_alias::factory () {
+    alias "$1"="cd ${alf_repo}/$1"
 }
 
-build-bastion () { _build ; }
-build-json2ldap () { _build ; }
-build-reposmall () { _build ; }
-build-search () { _build ; }
-build-transform-service () { _build ; }
+for _repo in \
+    $(find $alf_repo -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
+    _alias::factory "$_repo"
+done
+unset _repo
 
-alias paas-base-ami="cd ${alf_repo}/paas-base-ami"
-alias paas-control-plane="cd ${alf_repo}/paas-control-plane"
-alias paas-docker-build-images="cd ${alf_repo}/paas-docker-build-images"
-alias paas-terraform-modules="cd ${alf_repo}/paas-terraform-modules"
-
+alias pba=paas-base-ami
 alias pcp=paas-control-plane
+alias pdbi=paas-docker-build-images
 alias ptm=paas-terraform-modules
+alias pt=paas-tool
 
 aws-migrate-repo    () {
     local oldrepo=$(git remote -v | head -1 | awk '{print $2}')

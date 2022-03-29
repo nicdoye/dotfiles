@@ -1,3 +1,5 @@
 --no-line-number
 --pretty
 --no-heading
+--color
+never
