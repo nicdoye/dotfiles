@@ -1,4 +1,6 @@
 disable = [ 
+    "containers",
+    "github_cli_extensions",
     "vim",
     "gem",
     "node",

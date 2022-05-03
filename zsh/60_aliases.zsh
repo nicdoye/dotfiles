@@ -96,16 +96,31 @@ kc () {
 # Could be made more generic.
 ghc         () {
     local github_url=$1
-    local repo_root="${HOME}/vcs/github.com"
+    local github_user
+    local github_project
+    local github_gh_url
+    local github_user_dir
 
-    local github_user_project=$(echo "${github_url}"    | cut -f2 -d:)
-    local github_user=$(echo "${github_user_project}"   | cut -f1 -d/)
-    local github_project=$(echo $github_user_project    | cut -f2 -d/ | sed -e 's_.git$__' )
-    local github_user_dir="${repo_root}/${github_user}"
+    local repo_root="${HOME}/vcs/github.com"
+    local num_slash=$(awk -F/ '{print NF-1}' <<<"$github_url")
+
+    if [ "$num_slash" = "1" ]; then
+        github_user=$(echo $github_url    | cut -f1 -d/)
+        github_project=$(echo $github_url | cut -f2 -d/)
+        github_gh_url="$github_url"
+    else
+        local github_user_project
+        github_user_project=$(echo $github_url        | cut -f2 -d:)
+        github_user=$(echo $github_user_project       | cut -f1 -d/)
+        github_project=$(echo $github_user_project    | cut -f2 -d/ | sed -e 's_.git$__' )
+        github_gh_url="${github_user}/${github_project}"
+    fi
+
+    github_user_dir="${repo_root}/${github_user}"
 
     mkdir -p "${github_user_dir}" && \
         cd "${github_user_dir}" && \
-        git clone "${github_url}" && \
+        gh repo clone "${github_gh_url}" && \
         cd "${github_project}"
 }
 
@@ -194,7 +209,7 @@ _di_all     ()
     local pwd=$(pwd)
     local mountpoint=/mnt
     local local_ssh=/root/.ssh
-    local remote_ssh=/Users/ndoye/.ssh
+    local remote_ssh=${HOME}/.ssh
 
     docker run --rm -it     \
         -v /:${mountpoint}  \
@@ -444,4 +459,11 @@ aws-migrate-repo    () {
 reset-lastpass  () {
     pkill -9 LastPass
     pkill -9 LastPassSafari
+}
+
+docker::clean::all () {
+    for i in $(docker images --format '{{ .Repository }}:{{ .Tag }}' | sort -u); do
+        docker rmi $i
+    done
+    docker system prune --all --force
 }

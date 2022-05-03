@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /Users/ndoye/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
@@ -30,3 +30,5 @@
 	UseHttpPath = true
 [init]
 	defaultBranch = master
+[color]
+	ui = auto
