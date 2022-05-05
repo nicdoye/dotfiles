@@ -42,3 +42,5 @@ function history () {
         fc -l $*
     fi
 }
+
+alias ls='ls --color'
