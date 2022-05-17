@@ -1,11 +1,17 @@
 #!/bin/zsh
 
 # macOS
-_nic::macos::os () {
+_nic::macos::os::with::kernel () {
     system_profiler SPSoftwareDataType | \
         grep -w Version | \
         cut -f2 -d: | \
         /usr/bin/awk '{print $1 " " $2}' | xargs
+}
+
+_nic::macos::os () {
+    system_profiler SPSoftwareDataType -json | \
+        jq -r '.SPSoftwareDataType[0].os_version' | \
+        /usr/bin/awk '{print $1 " " $2}'
 }
 
 _nic::macos::cpu::fans () {
@@ -74,13 +80,6 @@ fi
 
 type uname &>> /dev/null && \
     _os=$(_nic::arch "${_os}")
-
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/jira
-JIRA_URL='https://alfresco.atlassian.net'
-JIRA_NAME='ndoye'
-JIRA_PREFIX='MSP'
-JIRA_RAPID_BOARD='true'
-# JIRA_DEFAULT_ACTION - Action to do when jira is called with no arguments; defaults to "new"
 
 if type antibody &>> /dev/null; then
     source <(antibody init)

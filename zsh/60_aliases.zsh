@@ -343,7 +343,7 @@ ga          () {
 
 gc          () {
     enable_cis
-    git commit -a -m "$*"
+    git commit -a -S -m "$*"
     disable_cis
 }
 
