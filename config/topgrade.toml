@@ -11,7 +11,8 @@ disable = [
     "dotnet",
 #    "vscode",
 #    "vscodium",
-    "gnome_shell_extensions"
+    "gnome_shell_extensions",
+    "vagrant"
 ]
 
 assume_yes = true

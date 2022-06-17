@@ -3,7 +3,7 @@
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
@@ -11,6 +11,7 @@
     path = ~/.secrets/gitconfig.include
 [commit]
 	template = ~/.stCommitMsg
+	gpgsign = true
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
@@ -32,3 +33,5 @@
 	defaultBranch = master
 [color]
 	ui = auto
+[user]
+	signingkey = C0ACA5CB890B704F

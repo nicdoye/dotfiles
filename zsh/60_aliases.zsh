@@ -411,8 +411,20 @@ paas-local  () {
 }
 
 alias       pls="paas-local start"
-alias       plc="paas-local connect"
+#alias       plc="paas-local connect"
+plc         () {
+    echo -e "\033]50;SetProfile=PaaS Full Client\a"
+    paas-local connect
+    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
+}
 alias       plx="paas-local stop"
+
+ssh         () {
+    echo -e "\033]50;SetProfile=PaaS Full Client\a"
+    /usr/bin/ssh "$@"
+    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
+}
+
 
 for _file in ${alf_repo}/paas-base-ami/src/main/scripts/build-*.sh; do
     local short_name=$(basename -s .sh "$_file")
@@ -466,4 +478,79 @@ docker::clean::all () {
         docker rmi $i
     done
     docker system prune --all --force
+}
+
+
+update::ami () {
+    local ami_id=$1
+    local marker='__REPO_AMI_USE2__'
+
+    # update marker with new AMI Id
+    echo "Updating Marker ${marker} with ${ami_id}"
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        if ! find alfresco -maxdepth 1 -name "module.tfvars" \
+            -exec sed -i -e "s~\(\/\*${marker}\*\/[[:space:]]\{0,1\}\"\).*\(\"[[:space:]]\{0,1\}\/\*${marker}\*\/\)~\1${ami_id}\2~g" {} \; ; then
+            echo "[ERROR] Failed to update module.tfvars AMI Ids"
+            return 1
+        fi
+    elif [[ "$OSTYPE" == "darwin"* ]]; then    # Mac OSX
+        if ! find alfresco -maxdepth 1 -name "module.tfvars" \
+            -exec sed -i '' -e "s~\(\/\*${marker}\*\/[[:space:]]\{0,1\}\"\).*\(\"[[:space:]]\{0,1\}\/\*${marker}\*\/\)~\1${ami_id}\2~g" {} \; ; then
+            echo "[ERROR] Failed to update module.tfvars AMI Ids"
+            return 1
+        fi
+    fi
+}
+
+delete::secrets () {
+    local prefix=$1
+    if [ ${#prefix} -lt 12 ]; then
+        echo "[ERROR] Woah - not doing that prefix must be at least 12 chars"
+        return 1
+    fi
+
+    for secret in $(aws secretsmanager list-secrets --region "$paas_dev_region" --profile "$paas_dev_customers" | jq -r '.SecretList[].Name' | grep -- ^"$prefix"); do
+        aws secretsmanager delete-secret \
+            --secret-id "$secret" \
+            --region "$paas_dev_region" \
+            --profile "$paas_dev_customers"
+    done
+}
+
+delete::asg () {
+    local asg=$1
+    aws autoscaling delete-auto-scaling-group \
+        --auto-scaling-group-name "$asg" \
+        --region "$paas_dev_region" \
+        --profile "$paas_dev_customers"
+}
+
+terminate::instances () {
+    local name=$1
+    local instance_ids id
+    if [ ${#name} -lt 12 ]; then
+        echo "[ERROR] Woah - not doing that name must be at least 12 chars"
+        return 1
+    fi
+
+    echo aws ec2 describe-instances --filters "Name=tag:Name,Values=$name" --region $paas_dev_region --profile $paas_dev_customers | jq -r '.Reservations[].Instances[].InstanceId'
+    aws ec2 describe-instances --filters "Name=tag:Name,Values=$name" --region $paas_dev_region --profile $paas_dev_customers | jq -r '.Reservations[].Instances[].InstanceId'
+
+    instance_ids=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=$name" --region $paas_dev_region --profile $paas_dev_customers | jq -r '.Reservations[].Instances[].InstanceId'))
+
+    if [ -z "$instance_ids" ]; then
+        echo "[WARN] No instances found"
+        echo $instance_ids
+    else
+        for id in "${instance_ids[@]}"; do
+            echo aws ec2 terminate-instances \
+                --instance-ids=$id \
+                --region $paas_dev_region \
+                --profile $paas_dev_customers
+        done
+    fi
+}
+
+reset::iterm () {
+    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
 }
