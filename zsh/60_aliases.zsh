@@ -401,6 +401,7 @@ alias       tdai="tda --terragrunt-ignore-dependency-errors"
 alias       rtaa="taa --terragrunt-source-update"
 alias       traa=rtaa
 alias       taay="taa --terragrunt-non-interactive -auto-approve -input=false"
+alias       tday="tda --terragrunt-non-interactive -auto-approve -input=false"
 
 sac         () { ssh -A centos@$1 ; }
 
