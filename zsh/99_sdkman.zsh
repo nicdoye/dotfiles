@@ -6,5 +6,5 @@ if [ -z "$container" ]; then
     export SDKMAN_DIR="${HOME}/.sdkman"
     [[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
 else
-    export PATH=/opt/java:$PATH
+    export PATH=/opt/java/bin:$PATH
 fi

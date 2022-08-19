@@ -4,7 +4,7 @@
 
 declare dotfiles_dir=.dotfiles
 
-ln_dot () {
+ln_d () {
   local dir=$1
   shift
   local files=$*

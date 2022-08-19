@@ -11,7 +11,7 @@
     path = ~/.secrets/gitconfig.include
 [commit]
 	template = ~/.stCommitMsg
-    #gpgsign = true
+	gpgsign = false
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
