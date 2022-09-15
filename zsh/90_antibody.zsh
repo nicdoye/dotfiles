@@ -105,6 +105,8 @@ fi
 # and actually, read the ZSH FAQ ...
 # https://github.com/ohmyzsh/ohmyzsh/wiki/FAQ#i-see-duplicate-typed-characters-after-i-complete-a-command
 if [ "${os_name}" = 'linux' ]; then
+    # Override diff-so-fancy
+    export GIT_PAGER=less
     if locale -a | grep -q en_GB.utf8; then
         export LANG=en_GB.UTF-8
     else
@@ -155,7 +157,7 @@ SPACESHIP_PROMPT_ORDER=(
   # gcloud        # Google Cloud Platform section
   venv          # virtualenv section
   # conda         # conda virtualenv section
-  pyenv         # Pyenv section
+  # pyenv         # Pyenv section
   # dotnet        # .NET section
   # ember       # Ember.js section (Disabled)
   # kubecontext   # Kubectl context section
