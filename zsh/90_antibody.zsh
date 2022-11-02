@@ -60,6 +60,8 @@ _nic::os::release::os () {
 
 if type system_profiler &>> /dev/null; then
     _os=$(_nic::macos::os)
+elif [ -r /etc/os-release ]; then
+    _os=$(_nic::os::release::os)
 elif [ -r /etc/redhat-release ]; then
     _os=$(_nic::redhat::relase::os /etc/redhat-release)
 elif [ -r /etc/centos-release ]; then
@@ -70,8 +72,6 @@ elif [ -r /etc/fedora-release ]; then
     _os=$(_nic::redhat::relase::os /etc/fedora-release)
 elif type lsb_release &>> /dev/null; then
     _os=$(_nic::lsb::os)
-elif [ -r /etc/os-release ]; then
-    _os=$(_nic::os::release::os)
 elif type uname &>> /dev/null; then
     _os="$(uname -s)"
 else

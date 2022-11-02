@@ -320,13 +320,17 @@ switch::cis () {
     if [ "${repo}" = 'paas-base-ami' ]; then
         local config_file
         for config_file in \
+            "${top_level}/playbooks/environments/acs/all.yaml" \
+            "${top_level}/playbooks/environments/ldap/all.yaml" \
             "${top_level}/playbooks/environments/acs/acs-all.yaml" \
             "${top_level}/playbooks/environments/ldap/ldap-all.yaml" ; do
 
-            if [[ "$OSTYPE" == "linux-gnu" ]]; then
-                sed -i -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
-            elif [[ "$OSTYPE" == "darwin"* ]]; then
-                sed -i '' -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
+            if [ -e "$config_file" ]; then 
+                if [[ "$OSTYPE" == "linux-gnu" ]]; then
+                    sed -i -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
+                elif [[ "$OSTYPE" == "darwin"* ]]; then
+                    sed -i '' -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
+                fi
             fi
         done
     fi
@@ -334,6 +338,7 @@ switch::cis () {
 
 alias   disable_cis="switch::cis disable"
 alias   enable_cis="switch::cis enable"
+alias   cis="switch::cis"
 
 ga          () {
     enable_cis
