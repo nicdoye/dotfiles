@@ -1,16 +1,11 @@
-# this block is in alphabetic order
-# ohmyzsh/ohmyzsh
-# robbyrussell/oh-my-zsh path:plugins/jira
-
-# Needed by Pure
+# Needed by Pure (which I don't use)
 mafredri/zsh-async
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
-zsh-users/zsh-history-substring-search
+#zsh-users/zsh-history-substring-search
 
 # Based on https://raw.githubusercontent.com/caarlos0/dotfiles/master/antibody/bundles.txt
 # these should be at last!
-denysdovhan/spaceship-prompt
-# sindresorhus/pure
+spaceship-prompt/spaceship-prompt
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search
