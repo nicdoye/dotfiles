@@ -13,17 +13,11 @@ _nic::macos::os::with::kernel () {
 }
 
 _nic::macos::os () {
-    system_profiler SPSoftwareDataType -json | \
-        jq -r '.SPSoftwareDataType[0].os_version' | \
-        /usr/bin/awk '{print $1 " " $2}'
-}
-
-_nic::macos::cpu::fans () {
-    echo $(osx-cpu-temp -f | tail -2 | awk '{print $7}' | xargs) + 2 / pq | dc
-}
-
-_nic::macos::cpu::temp () {
-    osx-cpu-temp
+    # should be lighter than calling jq
+    echo $(sw_vers -productName ; sw_vers -productVersion)
+    # system_profiler SPSoftwareDataType -json | \
+    #     jq -r '.SPSoftwareDataType[0].os_version' | \
+    #     /usr/bin/awk '{print $1 " " $2}'
 }
 
 # Linux
@@ -45,13 +39,13 @@ _nic::arch () {
     echo "${os}"
 }
 
-_nic::redhat::relase::os () {
-    local release_file="$1"
-    cut -f 1 -d'(' < "$release_file" | \
-        cut -f-2 -d. | \
-        sed -e 's_release __' \
-            -e 's_ $__g'
-}
+# _nic::redhat::relase::os () {
+#     local release_file="$1"
+#     cut -f 1 -d'(' < "$release_file" | \
+#         cut -f-2 -d. | \
+#         sed -e 's_release __' \
+#             -e 's_ $__g'
+# }
 
 _nic::os::release::os () {
     /usr/bin/grep '^PRETTY_NAME=' /etc/os-release | \
