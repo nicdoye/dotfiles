@@ -12,5 +12,7 @@ brew::sbin::dir () {
 
 brew::sbin::dir
 
+export HOMEBREW_NO_ENV_HINTS=1
+
 # DO NOT UNSET. IT IS USED IN OTHER FILES.
 #unset brew_prefix

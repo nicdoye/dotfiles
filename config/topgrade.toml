@@ -3,6 +3,8 @@ disable = [
     "github_cli_extensions",
     "vim",
     "gem",
+    "ruby_gems",
+    "helm",
     "node",
 #    "go",
     "node",
