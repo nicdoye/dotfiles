@@ -1,4 +1,5 @@
 disable = [ 
+#    "antibody",
     "containers",
     "github_cli_extensions",
     "vim",
@@ -14,7 +15,8 @@ disable = [
 #    "vscode",
 #    "vscodium",
     "gnome_shell_extensions",
-    "vagrant"
+    "vagrant",
+    "yarn"
 ]
 
 assume_yes = true
