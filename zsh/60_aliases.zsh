@@ -8,13 +8,11 @@ if type nvim &>> /dev/null; then
     alias       vim=nvim
 fi
 
+
 # Aliases allow for command line completion, unlike functions
 alias       k=kubectl
 
-typeset -g  alf_repo="${HOME}/vcs/github.com/Alfresco"
-
 alias       github="cd ${HOME}/vcs/github.com"
-alias       alf="cd ${alf_repo}"
 alias       psa='pkill ssh-agent'
 alias       setmyokta.sh='setmyokta-nic.sh'
 
@@ -410,58 +408,65 @@ alias       tday="tda --terragrunt-non-interactive -auto-approve -input=false"
 
 sac         () { ssh -A centos@$1 ; }
 
-paas-local  () {
-    local _old_dir="${PWD}"
-    cd ${alf_repo}/paas-control-plane/utils
-    ./paas-local.sh $1
-    cd "${_old_dir}"
-}
-
-alias       pls="paas-local start"
-#alias       plc="paas-local connect"
-plc         () {
-    echo -e "\033]50;SetProfile=PaaS Full Client\a"
-    paas-local connect
-    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
-}
-alias       plx="paas-local stop"
-
 ssh         () {
     echo -e "\033]50;SetProfile=PaaS Full Client\a"
     /usr/bin/ssh "$@"
     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
 }
 
+if [ -d "$alf_repo" ]; then
+    typeset -g  alf_repo="${HOME}/vcs/github.com/Alfresco"
+    alias       alf="cd ${alf_repo}"
 
-for _file in ${alf_repo}/paas-base-ami/src/main/scripts/build-*.sh; do
-    local short_name=$(basename -s .sh "$_file")
-    local script_name=$(basename "$_file")
-
-    "$short_name" () {
+    paas-local  () {
         local _old_dir="${PWD}"
-
-        cd ${alf_repo}/paas-base-ami/src/main/scripts
-        "./${funcstack[1]}.sh"
+        cd ${alf_repo}/paas-control-plane/utils
+        ./paas-local.sh $1
         cd "${_old_dir}"
     }
-done
-unset _file
 
-_alias::factory () {
-    alias "$1"="cd ${alf_repo}/$1"
-}
+    alias       pls="paas-local start"
+    #alias       plc="paas-local connect"
 
-for _repo in \
-    $(find $alf_repo -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
-    _alias::factory "$_repo"
-done
-unset _repo
+    plc         () {
+        echo -e "\033]50;SetProfile=PaaS Full Client\a"
+        paas-local connect
+        echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
+    }
+    alias       plx="paas-local stop"
 
-alias pba=paas-base-ami
-alias pcp=paas-control-plane
-alias pdbi=paas-docker-build-images
-alias ptm=paas-terraform-modules
-alias pt=paas-tool
+    if [ -d "${alf_repo}/paas-base-ami/src/main/scripts" ]; then
+        for _file in ${alf_repo}/paas-base-ami/src/main/scripts/build-*.sh; do
+            local short_name=$(basename -s .sh "$_file")
+            local script_name=$(basename "$_file")
+
+            "$short_name" () {
+                local _old_dir="${PWD}"
+
+                cd ${alf_repo}/paas-base-ami/src/main/scripts
+                "./${funcstack[1]}.sh"
+                cd "${_old_dir}"
+            }
+        done
+        unset _file
+    fi
+
+    _alias::factory () {
+        alias "$1"="cd ${alf_repo}/$1"
+    }
+
+    for _repo in \
+        $(find $alf_repo -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
+        _alias::factory "$_repo"
+    done
+    unset _repo
+
+    alias pba=paas-base-ami
+    alias pcp=paas-control-plane
+    alias pdbi=paas-docker-build-images
+    alias ptm=paas-terraform-modules
+    alias pt=paas-tool
+fi
 
 aws-migrate-repo    () {
     local oldrepo=$(git remote -v | head -1 | awk '{print $2}')

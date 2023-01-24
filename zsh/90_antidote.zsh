@@ -29,7 +29,13 @@ if [ $(echo $ZSH_VERSION | cut -f1 -d.) -lt 5 ] || \
 fi
 
 export SPACESHIP_CONFIG="${HOME}/.dotfiles/spaceship/spaceship.zsh"
-source "${HOME}/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh"
+if [ -f "${HOME}/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh" ]; then
+    # Old style (work laptop)
+    source "${HOME}/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh"
+elif [ -f "${HOME}/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh" ]; then
+    # New style (home laptop)
+    source "${HOME}/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh"
+fi
 
 if type antidote &>> /dev/null; then
     source <(antidote init)
