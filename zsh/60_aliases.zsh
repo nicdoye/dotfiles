@@ -225,44 +225,9 @@ alpine-fixed    () _di_all 'alpine@sha256:7b848083f93822dd21b0a2f14a110bd99f6efb
 # Particular centos (7.4.1708/latest on 2018.04.09)
 centos-fixed    () _di_all 'centos@sha256:bc494daa9d9ad7e37f93236fbd2c3f372739997c6336ef3c321e227f336e73d3' $*
 
-# Actual commands
-#aws         () di --volume ~/.aws:/root/.aws cgswong/aws:latest aws $*
-#curl        () fedora ${(%):-%N} $*
-#ggrep       () fedora grep $*
-
-# fedora/docker is faster than native which is faster than alpine/docker
-# sha1sum     () alpine-fixed ${(%):-%N} $*
-# sha256sum   () alpine-fixed ${(%):-%N} $*
-# sha512sum   () alpine-fixed ${(%):-%N} $*
-# # Not in alpine
-# sha224sum   () centos-fixed ${(%):-%N} $*
-# sha384sum   () centos-fixed ${(%):-%N} $*
-# Brew/coreutils is faster than fedora/docker which is faster than alpine/docker
-#md5sum      () fedora ${(%):-%N} $*
-
-# Native tar is faster than Brew/coreutils tar which is faster than all docker
-#gtar        () ubuntu tar $*
-
-# Supplied by brew coreutils
-# so each can be defined via:
-#shaNsum      () ${(%):-g%N} $*
-
-# fedora/docker is faster than native which is faster than alpine/docker
-# But these are the OS versions (shasum is actually perl)
-
-#sha1sum     () shasum -a ${${${(%):-%N}#sha}%sum} $*
-#sha224sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-#sha256sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-#sha384sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-#sha512sum   () shasum -a ${${${(%):-%N}#sha}%sum} $*
-
 # Supplied by brew coreutils
 md5sum      () ${(%):-g%N} $*
 vdir        () ${(%):-g%N} $*
-# Supplied by brew (homebrew/dupes) grep
-# Nothing to do for ggrep
-# Supplied by brew gnu-tar
-# Nothing to do for gtar
 
 # packer-latest       () {
 #     local packer_root='/opt/'
@@ -414,8 +379,8 @@ ssh         () {
     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
 }
 
+typeset -g  alf_repo="${HOME}/vcs/github.com/Alfresco"
 if [ -d "$alf_repo" ]; then
-    typeset -g  alf_repo="${HOME}/vcs/github.com/Alfresco"
     alias       alf="cd ${alf_repo}"
 
     paas-local  () {
