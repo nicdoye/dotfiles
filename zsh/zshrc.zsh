@@ -29,10 +29,10 @@
         local perf_file="/tmp/$(uname -s).$($date_cmd +%s).csv"
 
         for file in ${HOME}/.secrets/secrets.zsh ${dotfiles_dir}/zsh/<00-99>_*.zsh; do
-            time_start="$($date_cmd +%s%N)"
+#            time_start="$($date_cmd +%s%N)"
             source "${file}"
-            time_end="$($date_cmd +%s%N)"
-            echo "${file}\t$(( $time_end - $time_start ))" >> "${perf_file}"
+#            time_end="$($date_cmd +%s%N)"
+#            echo "${file}\t$(( $time_end - $time_start ))" >> "${perf_file}"
         done
     fi
 }
