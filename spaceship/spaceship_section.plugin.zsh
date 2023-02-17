@@ -70,6 +70,12 @@ os () {
     fi
 
     type uname &>> /dev/null && _os=$(_nic::arch "${_os}")
+
+    if [ -f /etc/alfresco-paas.d/full-client.sh ]; then
+        # FIXME - lazy
+        source /etc/alfresco-paas.d/full-client.sh
+        _os="${_os} / PaaS ${PAAS_TOOL_IMAGE_VERSION}"
+    fi
     echo $_os
 }
 
