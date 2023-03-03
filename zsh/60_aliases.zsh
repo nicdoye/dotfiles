@@ -528,6 +528,14 @@ terminate::instances () {
     fi
 }
 
+unset::aws   () {
+    local env
+    for env in $(env | grep '^AWS' | cut -f1 -d=); do 
+        unset "$env"
+    done
+}
+
 reset::iterm () {
     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
 }
+
