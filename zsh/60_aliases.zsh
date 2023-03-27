@@ -385,8 +385,8 @@ if [ -d "$alf_repo" ]; then
 
     paas-local  () {
         local _old_dir="${PWD}"
-        cd ${alf_repo}/paas-control-plane/utils
-        ./paas-local.sh $1
+        cd ${alf_repo}/paas-control-plane/utils    
+        aws2-wrap --profile default ./paas-local.sh $1
         cd "${_old_dir}"
     }
 
