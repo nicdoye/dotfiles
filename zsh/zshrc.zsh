@@ -39,3 +39,5 @@
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+# Who is setting this, please?
+unsetopt extended_glob

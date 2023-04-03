@@ -29,6 +29,8 @@ setopt autocd
 # Annoying
 unsetopt correctall
 setopt interactivecomments
+unsetopt extended_glob
+unsetopt EXTENDED_GLOB
 
 # ripgrep config
 export RIPGREP_CONFIG_PATH="${dotfiles_dir}/ripgrep/ripgreprc"

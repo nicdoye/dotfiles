@@ -30,16 +30,14 @@ fi
 
 export SPACESHIP_CONFIG="${HOME}/.dotfiles/spaceship/spaceship.zsh"
 if [ -f "${HOME}/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh" ]; then
-    # Old style (work laptop)
+    # Old style (work laptop) - see `antidote home`
     source "${HOME}/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh"
 elif [ -f "${HOME}/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh" ]; then
-    # New style (home laptop)
+    # New style (home laptop) - see `antidote home`
     source "${HOME}/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-spaceship-prompt-SLASH-spaceship-prompt/spaceship.zsh"
 fi
 
 if type antidote &>> /dev/null; then
     source <(antidote init)
     antidote load
-elif type antibody &>> /dev/null; then
-    source <(antibody init)
 fi

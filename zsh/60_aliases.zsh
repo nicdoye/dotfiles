@@ -197,33 +197,6 @@ Hgrep       () __nic::grep -H $*
 # Running commands in docker
 # $1 is the image
 di          () docker run --rm -it $*
-# Run commands in CentOS docker
-# ssh bit doesn't work as there's no client
-_di_all     ()
-{
-    local image=$1
-    shift 1
-
-    local pwd=$(pwd)
-    local mountpoint=/mnt
-    local local_ssh=/root/.ssh
-    local remote_ssh=${HOME}/.ssh
-
-    docker run --rm -it     \
-        -v /:${mountpoint}  \
-        -v ${remote_ssh}:${local_ssh}  \
-        -w ${mountpoint}/${pwd} ${image} $*
-}
-
-centos          () _di_all ${(%):-%N} $*
-fedora          () _di_all ${(%):-%N} $*
-ubuntu          () _di_all ${(%):-%N} $*
-debian          () _di_all ${(%):-%N} $*
-alpine          () _di_all ${(%):-%N} $*
-# Particular alpine (3.7/latest on 2018.04.09)
-alpine-fixed    () _di_all 'alpine@sha256:7b848083f93822dd21b0a2f14a110bd99f6efb4b838d499df6d04a49d0debf8b' $*
-# Particular centos (7.4.1708/latest on 2018.04.09)
-centos-fixed    () _di_all 'centos@sha256:bc494daa9d9ad7e37f93236fbd2c3f372739997c6336ef3c321e227f336e73d3' $*
 
 # Supplied by brew coreutils
 md5sum      () ${(%):-g%N} $*
@@ -352,6 +325,8 @@ gcp         () {
     git pull || return
 }
 
+alias       asl="aws sso login"
+
 alias       gdp="gcp develop"
 alias       g7p="gcp acs-v7"
 gpu         () { enable_cis; git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; disable_cis; }
@@ -445,12 +420,12 @@ aws-migrate-repo    () {
     git branch --set-upstream-to=origin/develop develop
 }
 
-reset-lastpass  () {
+reset-lastpass      () {
     pkill -9 LastPass
     pkill -9 LastPassSafari
 }
 
-docker::clean::all () {
+docker::clean::all  () {
     for i in $(docker images --format '{{ .Repository }}:{{ .Tag }}' | sort -u); do
         docker rmi $i
     done
@@ -458,7 +433,7 @@ docker::clean::all () {
 }
 
 
-update::ami () {
+update::ami         () {
     local ami_id=$1
     local marker='__REPO_AMI_USE2__'
 
@@ -479,7 +454,7 @@ update::ami () {
     fi
 }
 
-delete::secrets () {
+delete::secrets     () {
     local prefix=$1
     if [ ${#prefix} -lt 12 ]; then
         echo "[ERROR] Woah - not doing that prefix must be at least 12 chars"
@@ -494,7 +469,7 @@ delete::secrets () {
     done
 }
 
-delete::asg () {
+delete::asg         () {
     local asg=$1
     aws autoscaling delete-auto-scaling-group \
         --auto-scaling-group-name "$asg" \
@@ -502,7 +477,7 @@ delete::asg () {
         --profile "$paas_dev_customers"
 }
 
-terminate::instances () {
+terminate::instances    () {
     local name=$1
     local instance_ids id
     if [ ${#name} -lt 12 ]; then
@@ -528,14 +503,14 @@ terminate::instances () {
     fi
 }
 
-unset::aws   () {
+unset::aws          () {
     local env
     for env in $(env | grep '^AWS' | cut -f1 -d=); do 
         unset "$env"
     done
 }
 
-reset::iterm () {
+reset::iterm        () {
     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
 }
 
