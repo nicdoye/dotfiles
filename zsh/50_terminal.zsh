@@ -6,7 +6,11 @@ _read::ti_file () {
     [ -r "${_tic_file}" ] && tic "${_ti_file}"
 }
 # SHELL
-export EDITOR=nvim
+if [ "$TERM_PROGRAM" != 'vscode' ]; then
+    export EDITOR=nvim
+else
+    export EDITOR=code
+fi
 # This is idiotic - setting your editor to vim means it assumes you
 # want vim keybindings. Reset to emacs:
 bindkey -e
