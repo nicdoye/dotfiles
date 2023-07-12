@@ -354,7 +354,9 @@ ssh         () {
     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
 }
 
-typeset -g  alf_repo="${HOME}/vcs/github.com/Alfresco"
+typeset -g alf_repo="${HOME}/vcs/github.com/Alfresco"
+typeset -g pba_scripts="${alf_repo}/paas-base-ami/src/main/scripts"
+
 if [ -d "$alf_repo" ]; then
     alias       alf="cd ${alf_repo}"
 
@@ -375,15 +377,15 @@ if [ -d "$alf_repo" ]; then
     }
     alias       plx="paas-local stop"
 
-    if [ -d "${alf_repo}/paas-base-ami/src/main/scripts" ]; then
-        for _file in ${alf_repo}/paas-base-ami/src/main/scripts/build-*.sh; do
+    if [ -d "${pba_scripts}" ]; then
+        for _file in ${pba_scripts}/build-*.sh; do
             local short_name=$(basename -s .sh "$_file")
             local script_name=$(basename "$_file")
 
             "$short_name" () {
                 local _old_dir="${PWD}"
 
-                cd ${alf_repo}/paas-base-ami/src/main/scripts
+                cd "${pba_scripts}"
                 "./${funcstack[1]}.sh"
                 cd "${_old_dir}"
             }
@@ -406,6 +408,8 @@ if [ -d "$alf_repo" ]; then
     alias pdbi=paas-docker-build-images
     alias ptm=paas-terraform-modules
     alias pt=paas-tool
+    alias pbas="cd ${pba_scripts}"
+    alias sbs="cd ${src/main/scripts}"
 fi
 
 aws-migrate-repo    () {
