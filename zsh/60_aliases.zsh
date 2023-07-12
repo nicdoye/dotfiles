@@ -326,6 +326,8 @@ gcp         () {
 }
 
 alias       asl="aws sso login"
+alias       asla="asl; plx; pls; plc"
+alias       aslc="asl; plc"
 
 alias       gdp="gcp develop"
 alias       g7p="gcp acs-v7"
