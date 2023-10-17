@@ -58,7 +58,13 @@ if whence paas-bom.sh &>> /dev/null && paas-bom.sh | grep -q ^PAAS_TOOL_FULL_CLI
     echo -e "\033]50;SetProfile=PaaS Full Client\a"
 fi
 
+if type nvimpager &>> /dev/null; then
+    export PAGER=nvimpager
+else
+    export PAGER=less
+fi
+
 if ! type diff-so-fancy &>> /dev/null; then
     # Override diff-so-fancy
-    export GIT_PAGER=less
+    export GIT_PAGER=$PAGER
 fi
