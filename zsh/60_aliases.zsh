@@ -202,29 +202,6 @@ di          () docker run --rm -it $*
 md5sum      () ${(%):-g%N} $*
 vdir        () ${(%):-g%N} $*
 
-# packer-latest       () {
-#     local packer_root='/opt/'
-#     di -v $PWD:${packer_root} hashicorp/packer:light $(echo $* | sed -E "s_([[:alnum:]_-]*.json)_${packer_root}\1_")
-# }
-
-# From Alex
-getSecret() {
-    opt=SecretString
-    while getopts :b: o
-    do  case "$o" in
-        b) opt=SecretBinary
-            shift
-            ;;
-        [?]) echo >&2 "Usage: $0 [-b]  secret.id"
-        esac
-    done
-    aws secretsmanager get-secret-value --secret-id $1 --region us-east-1 | jq -r .${opt}
-}
-
-createSecret() {
-    aws secretsmanager create-secret --name "${1}" --kms-key-id d18dee8e-6c25-4771-85e9-55c96f5f80c3 --secret-string "${2}" --region us-east-1
-}
-
 switch::cis () {
     # mode is either enable or disable
     local mode=$1
@@ -261,7 +238,7 @@ switch::cis () {
             "${top_level}/playbooks/environments/acs/acs-all.yaml" \
             "${top_level}/playbooks/environments/ldap/ldap-all.yaml" ; do
 
-            if [ -e "$config_file" ]; then 
+            if [ -e "$config_file" ]; then
                 if [[ "$OSTYPE" == "linux-gnu" ]]; then
                     sed -i -e "s/cis_enabled: ${old_bool}/cis_enabled: ${new_bool}/" "${config_file}"
                 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -284,7 +261,7 @@ ga          () {
 
 gc          () {
     enable_cis
-    git commit -a -S -m "$*"
+    git commit -a -m "$*"
     disable_cis
 }
 
@@ -338,8 +315,6 @@ alias       gs="git status"
 alias       gdh="git diff head"
 alias       gdd="git diff develop"
 
-alias       git-bump-amis="git checkout -b feature/bump-amis-$(date -u +"%Y%m%dt%H%M%S0000")"
-
 alias       taa="terragrunt run-all apply"
 alias       tda="terragrunt run-all destroy"
 alias       tdai="tda --terragrunt-ignore-dependency-errors"
@@ -347,6 +322,9 @@ alias       rtaa="taa --terragrunt-source-update"
 alias       traa=rtaa
 alias       taay="taa --terragrunt-non-interactive -auto-approve -input=false"
 alias       tday="tda --terragrunt-non-interactive -auto-approve -input=false"
+
+
+alias       dssh="aws2-wrap --profile $paas_dev_customers ssh"
 
 sac         () { ssh -A centos@$1 ; }
 
@@ -364,7 +342,7 @@ if [ -d "$alf_repo" ]; then
 
     paas-local  () {
         local _old_dir="${PWD}"
-        cd ${alf_repo}/paas-control-plane/utils    
+        cd ${alf_repo}/paas-control-plane/utils
         aws2-wrap --profile default ./paas-local.sh $1
         cd "${_old_dir}"
     }
@@ -377,7 +355,12 @@ if [ -d "$alf_repo" ]; then
         paas-local connect
         echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
     }
-    alias       plx="paas-local stop"
+    plx         () {
+        paas-local stop
+        if [ "${PAAS_IMAGE_MANAGER_COMMAND}" = 'finch' ]; then
+            ${PAAS_IMAGE_MANAGER_COMMAND} rm paas
+        fi
+    }
 
     if [ -d "${pba_scripts}" ]; then
         for _file in ${pba_scripts}/build-*.sh; do
@@ -511,7 +494,7 @@ terminate::instances    () {
 
 unset::aws          () {
     local env
-    for env in $(env | grep '^AWS' | cut -f1 -d=); do 
+    for env in $(env | grep '^AWS' | cut -f1 -d=); do
         unset "$env"
     done
 }

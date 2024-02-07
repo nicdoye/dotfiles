@@ -34,7 +34,5 @@
 	ui = auto
 [user]
 	signingkey = C0ACA5CB890B704F
-[safe]
-	directory = /home/paas/vcs/github.com/Alfresco/paas-control-plane
 [rebase]
 	autoStash = true
