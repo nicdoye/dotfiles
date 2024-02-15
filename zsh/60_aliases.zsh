@@ -355,6 +355,7 @@ if [ -d "$alf_repo" ]; then
         paas-local connect
         echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
     }
+    
     plx         () {
         paas-local stop
         if [ "${PAAS_IMAGE_MANAGER_COMMAND}" = 'finch' ]; then
