@@ -10,85 +10,15 @@ fi
 
 
 # Aliases allow for command line completion, unlike functions
+if type kubecolor &>> /dev/null; then
+    alias       kubectl=kubecolor
+    # make completion work with kubecolor
+    compdef kubecolor=kubectl &>> /dev/null
+fi
 alias       k=kubectl
-
 alias       github="cd ${HOME}/vcs/github.com"
 alias       psa='pkill ssh-agent'
 alias       setmyokta.sh='setmyokta-nic.sh'
-
-# setmyokta -p wrapper
-o () {
-    local profile="$1"
-    local current_java=$(sdk c java | /usr/bin/awk '{print $4}' | egrep '[[:alnum:]]')
-    local working_java='8.0.252.hs-adpt'
-    sdk u java "${working_java}"
-
-    setmyokta.sh -p "${profile}"
-    sdk u java "${current_java}"
-}
-
-_kube_config () {
-    export KUBECONFIG="$1"
-    alias kubectl=kubectl-"$2"
-    alias helm="helm-$3"
-    [ -n "$4" ] && {
-        kubens "$4"
-        helm="helm-$3 --tiller-namespace $4"
-    }
-}
-
-# See assoc array in secrets
-_aws_profile () {
-    source "${HOME}/.secrets/k8s.zsh"
-    local profile="${k8s_to_aws_profile[$1]}"
-    aws sts get-caller-identity --output text --profile "${profile}" &>> /dev/null
-    [ $? != 0 ] && echo "Now run: o ${profile}"
-}
-
-kc () {
-    case "$1" in
-        'docker-for-desktop' )
-            _kube_config "${HOME}/.kube/desktop/docker-for-desktop.yaml" 1.10.3 2.9.1 nic
-            export HELM_HOME=~/.helm
-            ;;
-        'minikube' )
-            _kube_config "${HOME}/.kube/desktop/minikube.yaml" 1.10.3 2.9.1 nic
-            export HELM_HOME=~/.helm
-            ;;
-        'ps' )
-            # _aws_profile "$1"
-            _kube_config "${HOME}/.kube/alfresco/ps.yaml" 1.9.7 2.8.2 nic
-            alias helm="helm-2.8.2 --tls --tiller-namespace nic"
-            export HELM_HOME=~/.helm
-            ;;
-        'insight' )
-            # _aws_profile "$1"
-            _kube_config "${HOME}/.kube/alfresco/insight-calico.yaml" 1.10.5 2.10.0-rc3 insight
-            export TILLER_NAMESPACE='insight'
-            export HELM_HOME="${HOME}/.helm/alfresco/insight-calico/insight"
-            alias helm="helm-2.10.0-rc3 --tls --tiller-namespace ${TILLER_NAMESPACE}"
-            ;;
-        'eks-ps' )
-            # _aws_profile "$1"
-            _kube_config "${HOME}/.kube/alfresco/eks-ps.yaml" 1.10.4 2.9.1 default
-            export HELM_HOME=~/.helm
-            #export TILLER_NAMESPACE=insight
-            #export HELM_HOME=~/.helm/alfresco/1.10-calico/insight/
-            #alias helm="helm-2.9.1 --tls --tiller-namespace insight"
-            ;;
-        'deploy-363-15' )
-            export HELM_HOME=~/.helm
-            export AWS_PROFILE=engineering-ndoye
-            export AWS_REGION=us-east-1
-            _kube_config "${HOME}/.kube/alfresco/deploy-363-15.yaml" 1.10.3 2.9.1 nic
-            ;;
-        * )
-            _kube_config "${HOME}/.kube/config" 1.10.4 2.9.1 default
-            ;;
-    esac
-}
-
-#alias nic-ibm-cluster-004='kc ibm'
 
 # Clone github and cd into it.
 # Could be made more generic.
@@ -125,14 +55,6 @@ ghc         () {
 get::java_version   () {
     sdk current java | grep ^'[[:alnum:]]' | /usr/bin/awk '{print $4}'
 }
-
-setmyokta   () {
-    sdk use java '8.0.252.hs-adpt'
-    cd "${HOME}/.aws"
-    setmyokta.sh $*
-    cd "${OLDPWD}"
-}
-
 
 # This is only for commands, not functions or aliases
 find_cmd    () { whence -p $1 || echo false ; }
@@ -355,7 +277,7 @@ if [ -d "$alf_repo" ]; then
         paas-local connect
         echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
     }
-    
+
     plx         () {
         paas-local stop
         if [ "${PAAS_IMAGE_MANAGER_COMMAND}" = 'finch' ]; then
@@ -398,32 +320,19 @@ if [ -d "$alf_repo" ]; then
     alias sbs="cd ${src/main/scripts}"
 fi
 
-aws-migrate-repo    () {
-    local oldrepo=$(git remote -v | head -1 | awk '{print $2}')
-    local region=$(echo ${oldrepo} | cut -f2 -d.)
-    local reponame=$(basename ${oldrepo})
-    local newrepo="codecommit::${region}://${reponame}"
-
-    git remote remove origin
-    git remote add origin $newrepo
-    git fetch
-    git branch --set-upstream-to=origin/develop develop
-}
-
 reset-lastpass      () {
     pkill -9 LastPass
     pkill -9 LastPassSafari
 }
 
-docker::clean::all  () {
+docker-clean-all  () {
     for i in $(docker images --format '{{ .Repository }}:{{ .Tag }}' | sort -u); do
         docker rmi $i
     done
     docker system prune --all --force
 }
 
-
-update::ami         () {
+update-ami         () {
     local ami_id=$1
     local marker='__REPO_AMI_USE2__'
 
@@ -444,7 +353,7 @@ update::ami         () {
     fi
 }
 
-delete::secrets     () {
+delete-secrets     () {
     local prefix=$1
     if [ ${#prefix} -lt 12 ]; then
         echo "[ERROR] Woah - not doing that prefix must be at least 12 chars"
@@ -459,7 +368,7 @@ delete::secrets     () {
     done
 }
 
-delete::asg         () {
+delete-asg         () {
     local asg=$1
     aws autoscaling delete-auto-scaling-group \
         --auto-scaling-group-name "$asg" \
@@ -467,7 +376,7 @@ delete::asg         () {
         --profile "$paas_dev_customers"
 }
 
-terminate::instances    () {
+terminate-instances    () {
     local name=$1
     local instance_ids id
     if [ ${#name} -lt 12 ]; then
@@ -493,14 +402,14 @@ terminate::instances    () {
     fi
 }
 
-unset::aws          () {
+unset-aws          () {
     local env
     for env in $(env | grep '^AWS' | cut -f1 -d=); do
         unset "$env"
     done
 }
 
-reset::iterm        () {
+reset-iterm        () {
     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
 }
 

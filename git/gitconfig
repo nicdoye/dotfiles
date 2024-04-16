@@ -36,3 +36,22 @@
 	signingkey = C0ACA5CB890B704F
 [rebase]
 	autoStash = true
+[http]
+	postBuffer = 1048576000
+[https]
+	postBuffer = 1048576000
+[safe]
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
