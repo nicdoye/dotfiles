@@ -28,6 +28,8 @@
 [credential]
 	helper = !aws codecommit credential-helper $@
 	UseHttpPath = true
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [init]
 	defaultBranch = master
 [color]
@@ -42,16 +44,5 @@
 	postBuffer = 1048576000
 [safe]
 	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
+[credential "https://dev.azure.com"]
+	useHttpPath = true
