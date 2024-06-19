@@ -28,8 +28,7 @@
 [credential]
 	helper = !aws codecommit credential-helper $@
 	UseHttpPath = true
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
+	; helper = /usr/local/share/gcm-core/git-credential-manager
 [init]
 	defaultBranch = master
 [color]
@@ -44,38 +43,5 @@
 	postBuffer = 1048576000
 [safe]
 	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
-	directory = *
 [credential "https://dev.azure.com"]
 	useHttpPath = true
-[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/nic-msp-13048-02-deploy-source"]
-	provider = generic
-[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/alconah-extension-source"]
-	provider = generic
-[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/nic-msp-13048-02-adf-source"]
-	provider = generic
-[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/nic-msp-13048-02-extension-source"]
-	provider = generic
