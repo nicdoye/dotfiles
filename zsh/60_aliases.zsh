@@ -195,9 +195,10 @@ gmu         () {
         return
     fi
 
-    # Requires git 2.22.0+ which we don't have on CentOS
-    # git branch --show-current
-    local current_branch="$(git rev-parse --abbrev-ref HEAD)"
+    # Requires git 2.22.0+
+    local current_branch="$(git branch --show-current)"
+    # Old way
+    #local current_branch="$(git rev-parse --abbrev-ref HEAD)"
     if [ -z "$current_branch" ]; then
         echo 'current_branch not set' > /dev/stderr
         return
@@ -220,7 +221,7 @@ gcp         () {
         return
     fi
 
-    git checkout "${upstream}" || return
+    git check:out "${upstream}" || return
     git pull || return
 }
 

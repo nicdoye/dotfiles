@@ -44,5 +44,38 @@
 	postBuffer = 1048576000
 [safe]
 	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/nic-msp-13048-02-deploy-source"]
+	provider = generic
+[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/alconah-extension-source"]
+	provider = generic
+[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/nic-msp-13048-02-adf-source"]
+	provider = generic
+[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/nic-msp-13048-02-extension-source"]
+	provider = generic
