@@ -221,7 +221,7 @@ gcp         () {
         return
     fi
 
-    git check:out "${upstream}" || return
+    git checkout "${upstream}" || return
     git pull || return
 }
 
