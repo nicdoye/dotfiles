@@ -48,5 +48,16 @@
 	directory = *
 	directory = *
 	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
+	directory = *
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/nic-msp-14050-00-deploy-source"]
+	provider = generic
+[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/zerov7-deploy-source"]
+	provider = generic
+[credential "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/dev-customers-static-stack-source"]
+	provider = generic
