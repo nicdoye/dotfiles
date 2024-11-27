@@ -212,6 +212,7 @@ gmu         () {
 
 alias       gmd="gmu develop"
 alias       gm7="gmu acs-v7"
+alias       gm23="gmu acs-v23"
 
 # git checkout and pull
 gcp         () {
@@ -231,6 +232,7 @@ alias       aslc="asl; plc"
 
 alias       gdp="gcp develop"
 alias       g7p="gcp acs-v7"
+alias       g23p="gcp acs-v23"
 gpu         () { enable_cis; git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; disable_cis; }
 alias       gcb="git checkout -b"
 alias       gp="git pull"
@@ -248,8 +250,6 @@ alias       tday="tda --terragrunt-non-interactive -auto-approve -input=false"
 
 
 alias       dssh="aws2-wrap --profile $paas_dev_customers ssh"
-
-sac         () { ssh -A centos@$1 ; }
 
 ssh         () {
     echo -e "\033]50;SetProfile=PaaS Full Client\a"
