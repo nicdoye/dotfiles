@@ -245,8 +245,8 @@ alias       tda="terragrunt run-all destroy"
 alias       tdai="tda --terragrunt-ignore-dependency-errors"
 alias       rtaa="taa --terragrunt-source-update"
 alias       traa=rtaa
-alias       taay="taa --terragrunt-non-interactive -auto-approve -input=false"
-alias       tday="tda --terragrunt-non-interactive -auto-approve -input=false"
+alias       taay="taa --non-interactive -auto-approve -input=false"
+alias       tday="tda --non-interactive -auto-approve -input=false"
 
 
 alias       dssh="aws2-wrap --profile $paas_dev_customers ssh"
