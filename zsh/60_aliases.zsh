@@ -321,6 +321,16 @@ if [ -d "$alf_repo" ]; then
     alias sbs="cd ${src/main/scripts}"
 fi
 
+print::ptm::latest	() {
+	local _oldcwd="$PWD"
+	ptm
+	for i in 7 23; do 
+		git tag | grep ^v$i | sort -V | tail -1 
+	done
+	cd "$_oldcwd"
+}
+alias  print_ptm_latest="print::ptm::latest"
+
 reset-lastpass      () {
     pkill -9 LastPass
     pkill -9 LastPassSafari
