@@ -43,8 +43,5 @@
 	postBuffer = 1048576000
 [safe]
 	directory = *
-	directory = *
-	directory = *
-	directory = *
 [credential "https://dev.azure.com"]
 	useHttpPath = true
