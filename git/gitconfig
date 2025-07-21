@@ -45,3 +45,5 @@
 	directory = *
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[url "https://x-oauth-basic:SECRET@github.com"]
+	insteadOf = https://github.com

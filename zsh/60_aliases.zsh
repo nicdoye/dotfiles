@@ -240,8 +240,8 @@ alias       gs="git status"
 alias       gdh="git diff head"
 alias       gdd="git diff develop"
 
-alias       taa="terragrunt run-all apply"
-alias       tda="terragrunt run-all destroy"
+alias       taa="terragrunt apply --all"
+alias       tda="terragrunt destroy --all"
 alias       tdai="tda --terragrunt-ignore-dependency-errors"
 alias       rtaa="taa --terragrunt-source-update"
 alias       traa=rtaa
@@ -324,8 +324,8 @@ fi
 print::ptm::latest	() {
 	local _oldcwd="$PWD"
 	ptm
-	for i in 7 23; do 
-		git tag | grep ^v$i | sort -V | tail -1 
+	for i in 7 23; do
+		git tag | grep ^v$i | sort -V | tail -1
 	done
 	cd "$_oldcwd"
 }
