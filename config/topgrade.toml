@@ -29,3 +29,5 @@ cleanup = true
 [git]
 repos = []
 
+[containers]
+runtime = "podman"

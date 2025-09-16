@@ -1,4 +1,3 @@
-# Amazon Q pre block. Keep at the top of this file.
 #!/bin/zsh
 
 # Run the whole thing in one anonymous function
