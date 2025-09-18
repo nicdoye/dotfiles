@@ -26,10 +26,9 @@
 [pull]
 	rebase = true
 [credential]
-	helper = !aws codecommit credential-helper $@
+    helper = !aws codecommit credential-helper $@
+	; helper = store
 	UseHttpPath = true
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
 	; helper = /usr/local/share/gcm-core/git-credential-manager
 [init]
 	defaultBranch = master
@@ -47,3 +46,5 @@
 	directory = *
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[credential "https://git-codecommit.us-east-2.amazonaws.com"]
+	provider = generic
