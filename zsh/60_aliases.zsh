@@ -213,6 +213,7 @@ gmu         () {
 alias       gmd="gmu develop"
 alias       gm7="gmu acs-v7"
 alias       gm23="gmu acs-v23"
+alias       gm24="gmu acs-v24"
 
 # git checkout and pull
 gcp         () {
@@ -233,6 +234,7 @@ alias       aslc="asl; plc"
 alias       gdp="gcp develop"
 alias       g7p="gcp acs-v7"
 alias       g23p="gcp acs-v23"
+alias       g24p="gcp acs-v24"
 gpu         () { enable_cis; git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; disable_cis; }
 alias       gcb="git checkout -b"
 alias       gp="git pull"
