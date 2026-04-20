@@ -8,7 +8,7 @@ if test -n "${brew_prefix}"; then
     _site_functions="${brew_prefix}/share/zsh/site-functions"
     fpath+="${_site_functions}"
 
-    for completion in brew finch gh git helm kubectl
+    for completion in brew container gh git helm kubectl aws
     do
         if test -f "${_site_functions}/_${completion}"; then
             source "${_site_functions}/_${completion}" 2>/dev/null
@@ -19,13 +19,15 @@ else
     # git should just work https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Zsh
     source <(helm completion zsh)
     source <(kubectl completion zsh)
+
+    # AWS CLI completion
+    if _wac="$(whence -p aws_completer)" ; then
+        complete -C "$_wac" aws
+    fi
 fi
 
 if type kubecolor &>> /dev/null; then
     compdef kubecolor=kubectl &>> /dev/null
 fi
 
-# AWS CLI completion
-if _wac="$(whence -p aws_completer)" ; then
-    complete -C "$_wac" aws
-fi
+

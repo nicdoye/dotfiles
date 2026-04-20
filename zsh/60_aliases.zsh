@@ -244,8 +244,8 @@ alias       gdd="git diff develop"
 
 alias       taa="terragrunt apply --all"
 alias       tda="terragrunt destroy --all"
-alias       tdai="tda --terragrunt-ignore-dependency-errors"
-alias       rtaa="taa --terragrunt-source-update"
+alias       tdai="tda --queue-ignore-errors"
+alias       rtaa="taa --source-update"
 alias       traa=rtaa
 alias       taay="taa --non-interactive -auto-approve -input=false"
 alias       tday="tda --non-interactive -auto-approve -input=false"
@@ -283,9 +283,6 @@ if [ -d "$alf_repo" ]; then
 
     plx         () {
         paas-local stop
-        if [ "${PAAS_IMAGE_MANAGER_COMMAND}" = 'finch' ]; then
-            ${PAAS_IMAGE_MANAGER_COMMAND} rm paas
-        fi
     }
 
     if [ -d "${pba_scripts}" ]; then

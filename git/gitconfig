@@ -29,6 +29,8 @@
     helper = !aws codecommit credential-helper $@
 	; helper = store
 	UseHttpPath = true
+	helper =
+	;helper = /usr/local/share/gcm-core/git-credential-manager
 	; helper = /usr/local/share/gcm-core/git-credential-manager
 [init]
 	defaultBranch = master

@@ -17,7 +17,8 @@ disable = [
 #    "vscodium",
     "gnome_shell_extensions",
     "vagrant",
-    "yarn"
+    "yarn",
+    "microsoft_office"
 ]
 
 assume_yes = true
