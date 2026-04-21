@@ -18,7 +18,8 @@ disable = [
     "gnome_shell_extensions",
     "vagrant",
     "yarn",
-    "microsoft_office"
+    "microsoft_office",
+    "claude_code"
 ]
 
 assume_yes = true
@@ -31,4 +32,4 @@ cleanup = true
 repos = []
 
 [containers]
-runtime = "podman"
+runtime = "container"
