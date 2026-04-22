@@ -32,4 +32,6 @@ cleanup = true
 repos = []
 
 [containers]
-runtime = "container"
+# Unsupported
+#runtime = "container"
+runtime = "podman"
