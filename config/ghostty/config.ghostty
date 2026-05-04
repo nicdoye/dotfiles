@@ -1,0 +1,4 @@
+theme = Material Dark
+background = #000000
+copy-on-select = clipboard
+scrollback-limit = 100000
