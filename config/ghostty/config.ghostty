@@ -1,4 +1,7 @@
 theme = Material Dark
-background = #000000
+background = #080808
 copy-on-select = clipboard
 scrollback-limit = 100000
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor

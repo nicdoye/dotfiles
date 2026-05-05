@@ -316,6 +316,7 @@ if [ -d "$alf_repo" ]; then
     alias pdbi=paas-docker-build-images
     alias ptm=paas-terraform-modules
     alias pt=paas-tool
+    alias pcm=paas-claude-marketplace
     alias pbas="cd ${pba_scripts}"
     alias sbs="cd ${src/main/scripts}"
 fi
