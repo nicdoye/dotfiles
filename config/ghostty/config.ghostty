@@ -2,6 +2,12 @@ theme = Material Dark
 background = #080808
 copy-on-select = clipboard
 scrollback-limit = 100000
+
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
+
+macos-icon = retro
+
+unfocused-split-opacity = 0.7
+unfocused-split-fill = #1e2030
