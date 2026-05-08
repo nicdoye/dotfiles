@@ -30,4 +30,6 @@ if type kubecolor &>> /dev/null; then
     compdef kubecolor=kubectl &>> /dev/null
 fi
 
-
+if type zoxide &>> /dev/null; then
+    eval "$(zoxide init zsh)"
+fi
