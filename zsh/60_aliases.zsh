@@ -250,7 +250,6 @@ alias       traa=rtaa
 alias       taay="taa --non-interactive -auto-approve -input=false"
 alias       tday="tda --non-interactive -auto-approve -input=false"
 
-
 alias       dssh="aws2-wrap --profile $paas_dev_customers ssh"
 
 ssh         () {
@@ -319,6 +318,8 @@ if [ -d "$alf_repo" ]; then
     alias pcm=paas-claude-marketplace
     alias pbas="cd ${pba_scripts}"
     alias sbs="cd ${src/main/scripts}"
+
+    alias morning="_oldpwd=$PWD; ptm; echo 'List all JIRA tickets on the MSP project that are assigned to me and are in the Open or In Progress state' | claude | glow; cd $_oldpwd"
 fi
 
 print::ptm::latest	() {
