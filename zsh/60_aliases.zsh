@@ -319,7 +319,12 @@ if [ -d "$alf_repo" ]; then
     alias pbas="cd ${pba_scripts}"
     alias sbs="cd ${src/main/scripts}"
 
-    alias morning="_oldpwd=$PWD; ptm; echo 'List all JIRA tickets on the MSP project that are assigned to me and are in the Open or In Progress state' | claude | glow; cd $_oldpwd"
+    morning () {
+        local _oldpwd=$PWD
+        cd "${alf_repo}/paas-terraform-modules"
+        echo 'List all JIRA tickets on the MSP project that are assigned to me and are in the Open or In Progress state' | claude | glow
+        cd "$_oldpwd"
+    }
 fi
 
 print::ptm::latest	() {
