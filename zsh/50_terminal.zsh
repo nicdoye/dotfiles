@@ -7,7 +7,7 @@ _read::ti_file () {
 }
 # SHELL
 if [ "$TERM_PROGRAM" != 'vscode' ]; then
-    export EDITOR=nvim
+    export EDITOR=vim
 else
     export EDITOR=code
 fi
@@ -58,6 +58,7 @@ if whence paas-bom.sh &>> /dev/null && paas-bom.sh | grep -q ^PAAS_TOOL_FULL_CLI
     echo -e "\033]50;SetProfile=PaaS Full Client\a"
 fi
 
+# Not got vimpager working properly so sticking with nvimpager
 if type nvimpager &>> /dev/null; then
     export PAGER=nvimpager
 else

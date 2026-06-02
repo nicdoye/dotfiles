@@ -4,11 +4,6 @@ if type glances &>> /dev/null; then
     alias   top=glances
 fi
 
-if type nvim &>> /dev/null; then
-    alias       vim=nvim
-fi
-
-
 # Aliases allow for command line completion, unlike functions
 if type kubecolor &>> /dev/null; then
     alias       kubectl=kubecolor

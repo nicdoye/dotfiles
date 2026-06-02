@@ -1,50 +1,61 @@
+" 1. Start Vim-Plug
+call plug#begin('~/.vim/plugged')
+
+" 2. Declare your plugins
+Plug 'hzchirs/vim-material'
+
+" 3. CRITICAL: Close the Vim-Plug block so Vim registers the paths
+call plug#end()
+
+" 4. True Color Configuration
 if has("nvim")
-    " If you unset this you get the default background but none of the rest of
-    " the theme
     set termguicolors
     set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-elseif has("gui")
+    " Neovim 0.10+ needs this to stop the default 'vim' colorscheme
+    " from being applied before your plugin theme loads
+    set background=dark
+else
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
+
+" 5. GUI Specifics ---
+if has("gui")
     if has("gui_gtk2")
         set guifont=Inconsolata\ 12
     elseif has("gui_win32")
-        set guifont=Consolas:h10:cANSI
+        set guicursor=Consolas:h10:cANSI
     endif
 endif
 
-execute pathogen#infect('bundle/{}', '~/.config/nvim/bundle/{}')
-call plug#begin('~/.vim/plugged')
-Plug 'hzchirs/vim-material'
+" 6. Theme Activation
+if has('nvim') || filereadable(expand('~/.vim/plugged/vim-material/colors/vim-material.vim'))
+    set background=dark
+    colorscheme vim-material
 
-" Dark
-set background=dark
-colorscheme vim-material
+    " Drop ctermbg=NONE — let guibg do all the work under termguicolors
+    highlight Normal guibg=#263238
+else
+    colorscheme desert
+endif
 
-" This works on the modeline :-/
-"hi Normal guibg=NONE
-"hi Normal ctermbg=NONE
-" The actual colour set by material theme is
-"hi Normal ctermbg=#263238
-
+" 7. General Settings ---
 syntax on
 set nolist
 set expandtab ts=4 sw=4 ai
-
 set number
 set norelativenumber
 
-" Annoying highlighting of 'tabs'
+" Fix annoying highlighting of 'tabs'
 let g:indent_guides_auto_colors = 0
-" https://github.com/neovim/neovim/wiki/FAQ#how-can-i-change-the-cursor-shape-in-the-terminal
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-" Some files need syntax setting
-" NANT (like I need that)
+" Filetype Detections
 au BufRead,BufNewFile *.build set filetype=xml
-" .aliases obvs
 au BufRead,BufNewFile *.aliases set filetype=sh
 
-" Pretty pointless
-:let g:netrw_dirhistmax = 0
+" Disable netrw directory history
+let g:netrw_dirhistmax = 0
 
-" FZF
+" FZF Path Configuration
 set rtp+=/usr/local/opt/fzf
