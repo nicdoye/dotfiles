@@ -9,8 +9,6 @@
 	trustExitCode = true
 [include]
     path = ~/.secrets/gitconfig.include
-[commit]
-	gpgsign = false
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
@@ -36,8 +34,6 @@
 	defaultBranch = master
 [color]
 	ui = auto
-[user]
-	signingkey = C0ACA5CB890B704F
 [rebase]
 	autoStash = true
 [http]
