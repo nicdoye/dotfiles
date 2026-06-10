@@ -13,7 +13,6 @@ fi
 alias       k=kubectl
 alias       github="cd ${HOME}/vcs/github.com"
 alias       psa='pkill ssh-agent'
-alias       setmyokta.sh='setmyokta-nic.sh'
 
 # Clone github and cd into it.
 # Could be made more generic.
