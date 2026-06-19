@@ -22,7 +22,7 @@
 [push]
 	default = simple
 [pull]
-	rebase = true
+    rebase = true
 [credential]
     helper = !aws codecommit credential-helper $@
 	; helper = store
@@ -37,6 +37,7 @@
 [rebase]
 	autoStash = true
 [http]
+    sslVerify
 	postBuffer = 1048576000
 [https]
 	postBuffer = 1048576000
