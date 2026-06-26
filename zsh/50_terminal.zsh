@@ -54,9 +54,9 @@ alias ls='ls --color'
 # For git
 export GPG_TTY=$(tty)
 
-if whence paas-bom.sh &>> /dev/null && paas-bom.sh | grep -q ^PAAS_TOOL_FULL_CLIENT_VERSION ; then
-    echo -e "\033]50;SetProfile=PaaS Full Client\a"
-fi
+# if whence paas-bom.sh &>> /dev/null && paas-bom.sh | grep -q ^PAAS_TOOL_FULL_CLIENT_VERSION ; then
+#     echo -e "\033]50;SetProfile=PaaS Full Client\a"
+# fi
 
 # Not got vimpager working properly so sticking with nvimpager
 if type nvimpager &>> /dev/null; then

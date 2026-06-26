@@ -246,11 +246,11 @@ alias       tday="tda --non-interactive -auto-approve -input=false"
 
 alias       dssh="aws2-wrap --profile $paas_dev_customers ssh"
 
-ssh         () {
-    echo -e "\033]50;SetProfile=PaaS Full Client\a"
-    /usr/bin/ssh "$@"
-    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
-}
+# ssh         () {
+#     echo -e "\033]50;SetProfile=PaaS Full Client\a"
+#     /usr/bin/ssh "$@"
+#     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
+# }
 
 typeset -g alf_repo="${HOME}/vcs/github.com/Alfresco"
 typeset -g pba_scripts="${alf_repo}/paas-base-ami/src/main/scripts"
@@ -269,9 +269,9 @@ if [ -d "$alf_repo" ]; then
     #alias       plc="paas-local connect"
 
     plc         () {
-        echo -e "\033]50;SetProfile=PaaS Full Client\a"
+    #    echo -e "\033]50;SetProfile=PaaS Full Client\a"
         paas-local connect
-        echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
+    #    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
     }
 
     plx         () {
@@ -420,7 +420,6 @@ unset-aws          () {
     done
 }
 
-reset-iterm        () {
-    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
-}
-
+# reset-iterm        () {
+#     echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
+# }

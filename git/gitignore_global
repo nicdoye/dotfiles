@@ -6,3 +6,5 @@
 *.prev
 .idea/
 .vscode/
+
+**/.claude/settings.local.json
