@@ -14,6 +14,8 @@ if test -n "${brew_prefix}"; then
             source "${_site_functions}/_${completion}" 2>/dev/null
         fi
     done
+
+    source <(docker completion zsh)
 else
     # Inside a container, we don't have brew_prefix
     # git should just work https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Zsh
