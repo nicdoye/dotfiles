@@ -4,9 +4,6 @@
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [include]
     path = ~/.secrets/gitconfig.include
 [color "diff-highlight"]
@@ -26,10 +23,9 @@
 [credential]
     helper = !aws codecommit credential-helper $@
 	; helper = store
+	; helper = /usr/local/share/gcm-core/git-credential-manager
 	UseHttpPath = true
 	helper =
-	;helper = /usr/local/share/gcm-core/git-credential-manager
-	; helper = /usr/local/share/gcm-core/git-credential-manager
 [init]
 	defaultBranch = master
 [color]
