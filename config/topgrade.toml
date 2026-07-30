@@ -19,7 +19,8 @@ disable = [
     "vagrant",
     "yarn",
     "microsoft_office",
-    "claude_code"
+    "claude_code",
+    "claude_code_plugins"
 ]
 
 assume_yes = true
@@ -34,4 +35,4 @@ repos = []
 [containers]
 # Unsupported
 #runtime = "container"
-runtime = "podman"
+#runtime = "podman"
