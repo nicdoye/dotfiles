@@ -90,10 +90,10 @@ __nic::grep       ()
     if type rg &>> /dev/null; then
         if [[ ${grep_type} == '-H' ]]
         then
-            rg -N -p --no-heading ${str}
+            rg -N -p --no-heading --color=never ${str}
         else
             # Assume -l.
-            rg -l ${str}
+            rg -l --color=never ${str}
         fi
         return $?
     fi
