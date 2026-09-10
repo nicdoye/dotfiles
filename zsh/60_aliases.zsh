@@ -205,9 +205,9 @@ gmu         () {
 }
 
 alias       gmd="gmu develop"
-alias       gm7="gmu acs-v7"
 alias       gm23="gmu acs-v23"
 alias       gm24="gmu acs-v24"
+alias       gm26="gmu acs-v26"
 
 # git checkout and pull
 gcp         () {
@@ -226,9 +226,9 @@ alias       asla="asl; plx; pls; plc"
 alias       aslc="asl; plc"
 
 alias       gdp="gcp develop"
-alias       g7p="gcp acs-v7"
 alias       g23p="gcp acs-v23"
 alias       g24p="gcp acs-v24"
+alias       g26p="gcp acs-v26"
 gpu         () { enable_cis; git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; disable_cis; }
 alias       gcb="git checkout -b"
 alias       gp="git pull"
@@ -245,6 +245,31 @@ alias       taay="taa --non-interactive -auto-approve -input=false"
 alias       tday="tda --non-interactive -auto-approve -input=false"
 
 alias       dssh="aws2-wrap --profile $paas_dev_customers ssh"
+
+build_ami   () {
+    local version="$1"
+    if [ -z "$version" ]; then
+        echo 'Need a version like 23 or v23' >  /dev/stderr
+        return
+    fi
+
+    emulate -L zsh
+    setopt extendedglob
+    case "$version" in
+        v[0-9]##)
+            # Good
+            ;;
+        [0-9]##)
+            version="v$version"
+            ;;
+        *)
+            echo 'Need a version like 23 or v23' >  /dev/stderr
+            return
+            ;;
+    esac
+
+    aws codepipeline start-pipeline-execution --name "$(ami_pipeline "$version")"
+}
 
 # ssh         () {
 #     echo -e "\033]50;SetProfile=PaaS Full Client\a"

@@ -9,7 +9,7 @@ if [ "$(uname -s)" = 'Linux' ]; then
         export LANG=C.UTF-8
     fi
 else
-    _antidote_file="/opt/homebrew/opt/antidote/share/antidote/antidote.zsh"
+    _antidote_file="$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
 fi
 
 if [ -f "$_antidote_file" ]; then
@@ -38,6 +38,6 @@ elif [ -f "${HOME}/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-
 fi
 
 if type antidote &>> /dev/null; then
-    source <(antidote init)
+    #source <(antidote init)
     antidote load
 fi
