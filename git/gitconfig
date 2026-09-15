@@ -43,6 +43,7 @@
 	directory = *
 	directory = *
 	directory = *
+	directory = *
 [credential "https://git-codecommit.us-east-2.amazonaws.com"]
 	provider = generic
 [credential "https://dev.azure.com"]
