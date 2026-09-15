@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # pnpm
-export PNPM_HOME='${HOME}/Library/pnpm'
+export PNPM_HOME="${HOME}/Library/pnpm"
 
 if [ -d "$PNPM_HOME" ]; then
     case ":$PATH:" in
