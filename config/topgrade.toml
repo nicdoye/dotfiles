@@ -20,7 +20,8 @@ disable = [
     "yarn",
     "microsoft_office",
     "claude_code",
-    "claude_code_plugins"
+    "claude_code_plugins",
+    "hermes_agent"
 ]
 
 assume_yes = true
