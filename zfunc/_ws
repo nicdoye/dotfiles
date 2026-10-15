@@ -1,0 +1,22 @@
+#compdef ws
+
+_ws() {
+  local -a commands
+  commands=(
+    'up:start dev container'
+    'daily:daily init for the dev container'
+    'shell:connect to the dev container'
+  )
+
+  _arguments -C \
+    '1: :->command' \
+    '*:: :->args'
+
+  case $state in
+    command)
+      _describe -t commands 'ws command' commands
+      ;;
+  esac
+}
+
+_ws "$@"

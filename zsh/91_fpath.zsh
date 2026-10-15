@@ -26,6 +26,9 @@ else
     fi
 fi
 
+fpath+="${HOME}/.dotfiles/zfunc"
+autoload -Uz compinit && compinit
+
 if type docker &>> /dev/null; then
     source <(docker completion zsh)
 fi
@@ -37,3 +40,4 @@ fi
 if type zoxide &>> /dev/null; then
     eval "$(zoxide init zsh)"
 fi
+

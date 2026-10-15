@@ -1,0 +1,21 @@
+#compdef cis switch::cis
+
+_cis() {
+  local -a commands
+  commands=(
+    'enable:Enable CIS'
+    'disable:Disable CIS'
+  )
+
+  _arguments -C \
+    '1: :->command' \
+    '*:: :->args'
+
+  case $state in
+    command)
+      _describe -t commands 'cis command' commands
+      ;;
+  esac
+}
+
+_cis "$@"

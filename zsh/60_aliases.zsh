@@ -285,23 +285,27 @@ if [ -d "$alf_repo" ]; then
 
     paas-local  () {
         local _old_dir="${PWD}"
-        cd ${alf_repo}/paas-control-plane/utils
+        cd "${alf_repo}/paas-control-plane/utils"
         aws2-wrap --profile default ./paas-local.sh $1
         cd "${_old_dir}"
     }
 
+    ws-aux    () {
+        local _old_dir="${PWD}"
+        cd "${alf_repo}/paas-dev-container"
+        "./bin/$1" "${@:2}"
+        cd "${_old_dir}"
+    }
+
+    ws-up       () { ws-aux "$0" "$@"; }
+    ws-daily    () { ws-aux "$0" "$@"; }
+    ws-shell    () { ws-aux "$0" "$@"; }
+
+    ws          () { "ws-$1" "${@:2}"; }
+
     alias       pls="paas-local start"
-    #alias       plc="paas-local connect"
-
-    plc         () {
-    #    echo -e "\033]50;SetProfile=PaaS Full Client\a"
-        paas-local connect
-    #    echo -e "\033]50;SetProfile=Tomorrow Night Bright\a"
-    }
-
-    plx         () {
-        paas-local stop
-    }
+    alias       plc="paas-local connect"
+    alias       plx="paas-local stop"
 
     if [ -d "${pba_scripts}" ]; then
         for _file in ${pba_scripts}/build-*.sh; do

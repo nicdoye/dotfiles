@@ -41,3 +41,27 @@
 
 # Who is setting this, please?
 unsetopt extended_glob
+
+# PaaS Dev Workstation - devcontainer specific settings
+# Only apply if running inside the devcontainer (check PAAS_DEVCONTAINER env var)
+if [ "$PAAS_DEVCONTAINER" = "1" ]; then
+    source /home/paas/.venv-dev/bin/activate
+    export JAVA_HOME=/usr/local/sdkman/candidates/java/current
+    export PATH="$JAVA_HOME/bin:$PATH"
+
+    # Git branch in prompt function. Emits " (branch)", or " (sha)" on a
+    # detached HEAD, and nothing at all outside a repository.
+    git_branch() {
+      local branch
+      branch=$(git symbolic-ref --short HEAD 2>/dev/null) \
+        || branch=$(git rev-parse --short HEAD 2>/dev/null) \
+        || return 0
+      printf ' (%s)' "$branch"
+    }
+
+    # Custom prompt (devcontainer indicator: blue "paas-ws", green directory and
+    # branch). Single-quoted so prompt_subst re-runs git_branch before every
+    # prompt; double quotes would expand it once here and freeze the branch.
+    setopt prompt_subst
+    PROMPT='%F{blue}paas-ws%f %F{green}%~%f%F{green}$(git_branch)%f $ '
+fi
