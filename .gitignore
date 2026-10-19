@@ -2,3 +2,4 @@
 *~
 *.zwc
 .DS_Store
+vim/vim/plugged/*
