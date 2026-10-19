@@ -21,7 +21,9 @@ disable = [
     "microsoft_office",
     "claude_code",
     "claude_code_plugins",
-    "hermes_agent"
+    "hermes_agent",
+    "mas",
+    "cargo"
 ]
 
 assume_yes = true
