@@ -25,7 +25,6 @@
 	; helper = store
 	; helper = /usr/local/share/gcm-core/git-credential-manager
 	UseHttpPath = true
-	helper =
 [init]
 	defaultBranch = master
 [color]
@@ -33,7 +32,6 @@
 [rebase]
 	autoStash = true
 [http]
-    sslVerify
 	postBuffer = 1048576000
 [https]
 	postBuffer = 1048576000
