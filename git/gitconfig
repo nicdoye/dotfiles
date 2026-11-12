@@ -41,3 +41,9 @@
 	provider = generic
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[credential "https://origin.cursor.com/git"]
+	helper = 
+	helper = !/Users/nic/.local/bin/origin credential-helper
+[credential "https://origin.cursor.com"]
+	helper = 
+	helper = !/Users/nic/.local/bin/origin credential-helper
