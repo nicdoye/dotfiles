@@ -222,13 +222,7 @@ gcp         () {
 }
 
 alias       asl="aws sso login"
-alias       asla="asl; plx; pls; plc"
-alias       aslc="asl; plc"
 
-alias       gdp="gcp develop"
-alias       g23p="gcp acs-v23"
-alias       g24p="gcp acs-v24"
-alias       g26p="gcp acs-v26"
 gpu         () { enable_cis; git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) ; disable_cis; }
 alias       gcb="git checkout -b"
 alias       gp="git pull"
@@ -306,6 +300,16 @@ if [ -d "$alf_repo" ]; then
     alias       pls="paas-local start"
     alias       plc="paas-local connect"
     alias       plx="paas-local stop"
+
+    alias       asla="asl; plx; pls; plc"
+    alias       aslc="asl; plc"
+
+    alias       aw="asl; ws daily --yes"
+
+    alias       gdp="gcp develop"
+    alias       g23p="gcp acs-v23"
+    alias       g24p="gcp acs-v24"
+    alias       g26p="gcp acs-v26"
 
     if [ -d "${pba_scripts}" ]; then
         for _file in ${pba_scripts}/build-*.sh; do
